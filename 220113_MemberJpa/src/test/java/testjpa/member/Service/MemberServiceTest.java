@@ -24,7 +24,6 @@ public class MemberServiceTest {
 
 	@Autowired MemberService memberService;
 	@Autowired MemberRepository memberRepository;
-	@Autowired EntityManager em;
 
 	@Test
 	@Rollback(false)
@@ -37,8 +36,8 @@ public class MemberServiceTest {
 		Long saveId = memberService.join(member);
 		
 		//then
-		em.flush();
-		assertEquals(member, memberRepository.findById(saveId));
+		Member findMember = memberRepository.findById(saveId).get(); 
+		assertEquals(member.getName(), findMember.getName());
 	}
 	
 	@Test(expected = IllegalStateException.class)
