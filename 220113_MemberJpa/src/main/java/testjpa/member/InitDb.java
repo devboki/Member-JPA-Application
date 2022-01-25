@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import testjpa.member.domain.Gender;
 import testjpa.member.domain.Member;
+import testjpa.member.domain.RoleType;
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class InitDb {
 			member1.setAge(20);
 			member1.setEmail("userA@sample.com");
 			member1.setGender(Gender.FEMALE);
+			member1.setRoleType(RoleType.USER);
 			em.persist(member1);
 			
 			Member member2 = new Member();
@@ -41,6 +43,7 @@ public class InitDb {
 			member2.setAge(30);
 			member2.setEmail("userB@sample.com");
 			member2.setGender(Gender.MALE);
+			member1.setRoleType(RoleType.ADMIN);
 			em.persist(member2);
 		}
 	}

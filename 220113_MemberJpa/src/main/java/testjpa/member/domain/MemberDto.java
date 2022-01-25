@@ -4,10 +4,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter @Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDto {
 
 	private Long id;
@@ -24,14 +27,8 @@ public class MemberDto {
 	@NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "올바른 이메일 주소를 입력해주세요. (sample@email.com)")
 	private String email;
-
-	public MemberDto(Long id, String name, Gender gender, int age, String email) {
-		this.id = id;
-		this.name = name;
-		this.gender = gender;
-		this.age = age;
-		this.email = email;
-	}
-
-	public MemberDto() { }
+	
+	private RoleType roleType;
+	
+	private Info info;
 }
