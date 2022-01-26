@@ -2,7 +2,12 @@ package testjpa.member.domain;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,26 +21,19 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Info {
+public class Diary {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "info_id")
+	@Column(name = "diary_id")
 	private Long id;
-	
-	private int painScale;
 	
 	@Column(name = "date")
 	@CreationTimestamp
 	private LocalDateTime createdTimeAt;
 	
-	private String history;
+	private int painScale;
 	
-	public Info(LocalDateTime createdTimeAt, int painScale) {
-		this.createdTimeAt = createdTimeAt;
-		this.painScale = painScale;
-	}
-	
-	public Info(String history) {
-		this.history = history;
-	}
+	@OneToOne(mappedBy = "diary")
+	@BatchSize(size = 100)
+	private Member member;
 }

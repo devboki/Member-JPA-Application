@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -16,11 +14,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import testjpa.member.domain.Gender;
-import testjpa.member.domain.Info;
 import testjpa.member.domain.Member;
-import testjpa.member.repository.InfoRepository;
 import testjpa.member.repository.MemberRepository;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,21 +24,15 @@ public class MemberServiceTest {
 
 	@Autowired MemberService memberService;
 	@Autowired MemberRepository memberRepository;
-	@Autowired InfoRepository infoRepository;
-	@Autowired EntityManager em;
-
+	
 	@Test
 	@Rollback(false)
 	public void 회원가입() throws Exception {
-		Member member = new Member();
-		member.setName("kim");
-		member.setAge(20);
-		member.setEmail("kim@naver.com");
-		member.setGender(Gender.FEMALE);
+		Member member = new Member("userK", 50, "userK@naver.com", Gender.FEMALE);
 		
 		Long saveId = memberService.join(member);
 		
-		Member findMember = memberRepository.findById(saveId).get(); 
+		Member findMember = memberService.findOne(saveId); 
 		assertEquals(member.getName(), findMember.getName());
 	}
 	
@@ -63,33 +52,25 @@ public class MemberServiceTest {
 	
 	@Test
 	@Rollback(false)
-	public void 병력저장() throws Exception {
-		Info info = new Info();
-		info.setHistory("병력있음");
-		em.persist(info);
+	public void 전체_회원_조회() throws Exception {
+		Member member1 = new Member();
+		member1.setName("OOO");
+		member1.setAge(20);
+		member1.setEmail("ooo@naver.com");
+		member1.setGender(Gender.FEMALE);
+		memberService.join(member1);
 		
-		Member member = new Member();
-		member.setName("yoon");
-		member.setAge(20);
-		member.setEmail("yoon@naver.com");
-		member.setGender(Gender.FEMALE);
-		member.setInfo(info);
-		em.persist(member);
-	}
-	
-	@Test
-	@Rollback(false)
-	public void 정보조회() throws Exception {
-		Info info = new Info("관절염");
-		infoRepository.save(info);
+		Member member2 = new Member();
+		member2.setName("VVV");
+		member2.setAge(20);
+		member2.setEmail("vvv@naver.com");
+		member2.setGender(Gender.FEMALE);
+		memberService.join(member2);
 		
-		Member member = new Member("userX", 50, "xxx@naver.com", Gender.FEMALE);
-		member.setInfo(info);
-		memberRepository.save(member);
-
-		Member findMember = memberRepository.findById(member.getId()).get();
-		System.out.println("findMember = " + findMember.getName());
-		System.out.println("memberHistory = " + findMember.getInfo().getHistory());
+		List<Member> MemberList = memberService.findMembers();
+		for (Member member : MemberList) {
+			System.out.println("MemberList = " + member.getName());
+		}
 	}
 	
 }

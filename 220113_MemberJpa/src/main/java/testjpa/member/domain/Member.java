@@ -6,10 +6,12 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter //InitDb를 위해 @Setter
+@NoArgsConstructor
 @DynamicInsert
 public class Member {
 
@@ -36,10 +38,14 @@ public class Member {
 	private RoleType roleType;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "info_id") //Foreign key
-	private Info info;
+	@JoinColumn(name = "history_id")
+	private History history;
 	
-	public Member() { } //JPA는 기본 생성자를 protected까지 열어놔야 함. 프록시 동작할 때 방해받으므로 private X
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "diary_id") 
+	private Diary diary;
+	
+	
 
 	public Member(String name, int age, String email, Gender gender) {
 		this.name = name;
