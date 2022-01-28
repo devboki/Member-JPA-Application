@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import testjpa.member.domain.Diary;
+import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
 import testjpa.member.repository.MemberRepository;
 
@@ -17,7 +19,6 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	
-	/* 회원 가입 */
 	@Transactional //데이터 변경 O
 	public Long join(Member member) { 
 		validateDuplicateMember(member); //중복 회원 검증
@@ -25,7 +26,6 @@ public class MemberService {
 		return member.getId();
 	}
 
-	/* 중복 회원 검증 */
 	private void validateDuplicateMember(Member member) {
 		List<Member> findMembers = memberRepository.findByEmail(member.getEmail());
 		if (!findMembers.isEmpty()) {
@@ -33,14 +33,20 @@ public class MemberService {
 		}
 	}
 	
-	/* 전체 회원 조회 */
 	public List<Member> findMembers(){
 		return memberRepository.findAll();
 	}
 
-	/* 한명 조회 */
 	public Member findOne(Long memberId) {
 		return memberRepository.findById(memberId).get();
+	}
+	
+	public List<Member> findDiary(Diary diary) {
+		return memberRepository.findByDiary(diary);
+	}
+	
+	public List<Member> findHistory(History history) {
+		return memberRepository.findByHistory(history);
 	}
 	
 }

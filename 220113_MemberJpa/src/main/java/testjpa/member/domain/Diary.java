@@ -1,6 +1,8 @@
 package testjpa.member.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,11 +31,15 @@ public class Diary {
 	
 	@Column(name = "date")
 	@CreationTimestamp
-	private LocalDateTime createdTimeAt;
+	private LocalDateTime createdTimeAt; 
 	
 	private int painScale;
 	
 	@OneToOne(mappedBy = "diary")
 	@BatchSize(size = 100)
 	private Member member;
+	
+	public Diary(int painScale) {
+		this.painScale = painScale;
+	}
 }

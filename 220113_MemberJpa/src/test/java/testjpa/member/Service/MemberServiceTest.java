@@ -1,7 +1,7 @@
 package testjpa.member.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import javax.transaction.Transactional;
@@ -13,9 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import testjpa.member.domain.Diary;
 import testjpa.member.domain.Gender;
+import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
-import testjpa.member.repository.MemberRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +24,8 @@ import testjpa.member.repository.MemberRepository;
 public class MemberServiceTest {
 
 	@Autowired MemberService memberService;
-	@Autowired MemberRepository memberRepository;
+	@Autowired DiaryService diaryService;
+	@Autowired HistoryService historyService;
 	
 	@Test
 	@Rollback(false)
@@ -36,18 +38,18 @@ public class MemberServiceTest {
 		assertEquals(member.getName(), findMember.getName());
 	}
 	
-	@Test(expected = IllegalStateException.class)
-	public void 중복_회원_예외() throws Exception {
+	@Test
+	public void 중복_회원_예외() {
 		Member member1 = new Member();
-		member1.setName("kim");
+		member1.setEmail("test@test.com");
+		memberService.join(member1);
 		
 		Member member2 = new Member();
-		member2.setName("kim");
-
-		memberService.join(member1);
-		memberService.join(member2);
-
-		fail("예외가 발생해야 한다.");
+		member2.setEmail("test@test.com");
+		
+		assertThrows(IllegalStateException.class, () -> { 
+			memberService.join(member2);
+		});
 	}
 	
 	@Test
@@ -73,4 +75,38 @@ public class MemberServiceTest {
 		}
 	}
 	
+	@Test
+	@Rollback(false)
+	public void 통증일기_조회() throws Exception {
+		Diary diary = new Diary(9);
+		diaryService.save(diary);
+		
+		Member member = new Member("userZ", 50, "userZ@naver.com", Gender.FEMALE);
+		member.setDiary(diary);
+		memberService.join(member);
+		
+		Member findMember = memberService.findOne(member.getId());
+
+		System.out.println("findMemberId = " + findMember.getId());
+		System.out.println("findMemberName = " + findMember.getName());
+		System.out.println("findMemberDiaryDate = " + findMember.getDiary().getCreatedTimeAt());
+		System.out.println("findMemberPainScale = " + findMember.getDiary().getPainScale());
+	}
+	
+	@Test
+	@Rollback(false)
+	public void 병력조회() throws Exception {
+		History history = new History("병력있음");
+		historyService.save(history);
+		
+		Member member = new Member("userX", 50, "userX@naver.com", Gender.FEMALE);
+		member.setHistory(history);
+		memberService.join(member);
+		
+		Member findMember = memberService.findOne(member.getId());
+
+		System.out.println("findMemberId = " + findMember.getId());
+		System.out.println("findMemberName = " + findMember.getName());
+		System.out.println("findMemberHistory = " + findMember.getHistory().getHistory());
+	}
 }

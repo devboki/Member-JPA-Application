@@ -29,4 +29,8 @@ public class History {
 	@OneToOne(mappedBy = "history")
 	@BatchSize(size = 100)
 	private Member member;
+	
+	public History(String history) {
+		this.history = history;
+	}
 }

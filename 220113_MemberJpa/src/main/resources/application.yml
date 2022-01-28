@@ -7,13 +7,11 @@ spring:  datasource:    url: jdbc:h2:tcp://localhost/~/jpashop;
     driver-class-name: org.h2.Driver
       jpa:    hibernate:      ddl-auto: create
     properties:      hibernate:
+        '[default_batch_fetch_size]': 100      
         '[format_sql]': true
-#       sql 예쁘게 보이도록 
-        '[default_batch_fetch_size]': 100
 
 logging:
   level:
-    '[org.hibernate.sql]': debug
-#    show_sql은 sysout으로 출력됨. log는 logger를 통해서 찍기
+    '[org.hibernate.SQL]': debug
     '[org.hibernate.type.descriptor.sql]': trace
 #    파라미터 출력을 위한 외부 라이브러리 P6Spy    

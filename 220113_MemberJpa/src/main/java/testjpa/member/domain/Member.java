@@ -44,8 +44,6 @@ public class Member {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "diary_id") 
 	private Diary diary;
-	
-	
 
 	public Member(String name, int age, String email, Gender gender) {
 		this.name = name;
