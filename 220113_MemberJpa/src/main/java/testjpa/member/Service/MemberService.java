@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import testjpa.member.domain.Diary;
+import testjpa.member.domain.Doctor;
 import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
 import testjpa.member.repository.MemberRepository;
@@ -47,6 +48,10 @@ public class MemberService {
 	
 	public List<Member> findHistory(History history) {
 		return memberRepository.findByHistory(history);
+	}
+	
+	public List<Member> findDoctor(Doctor doctor){
+		return memberRepository.findByDoctor(doctor);
 	}
 	
 }

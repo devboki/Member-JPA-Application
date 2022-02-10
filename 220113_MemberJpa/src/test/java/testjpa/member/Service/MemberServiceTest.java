@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import testjpa.member.domain.Diary;
+import testjpa.member.domain.Doctor;
 import testjpa.member.domain.Gender;
 import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
@@ -26,11 +27,12 @@ public class MemberServiceTest {
 	@Autowired MemberService memberService;
 	@Autowired DiaryService diaryService;
 	@Autowired HistoryService historyService;
+	@Autowired DoctorService doctorService;
 	
 	@Test
 	@Rollback(false)
 	public void 회원가입() throws Exception {
-		Member member = new Member("userK", 50, "userK@naver.com", Gender.FEMALE);
+		Member member = new Member("userK", 50, "userK@naver.com", Gender.FEMALE, null, null, null);
 		
 		Long saveId = memberService.join(member);
 		
@@ -40,33 +42,23 @@ public class MemberServiceTest {
 	
 	@Test
 	public void 중복_회원_예외() {
-		Member member1 = new Member();
-		member1.setEmail("test@test.com");
+		Member member1 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null);
 		memberService.join(member1);
 		
-		Member member2 = new Member();
-		member2.setEmail("test@test.com");
+		Member member2 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null);
 		
 		assertThrows(IllegalStateException.class, () -> { 
-			memberService.join(member2);
+			memberService.join(member2); //member1과 이메일이 다르면 테스트 실패
 		});
 	}
 	
 	@Test
 	@Rollback(false)
 	public void 전체_회원_조회() throws Exception {
-		Member member1 = new Member();
-		member1.setName("OOO");
-		member1.setAge(20);
-		member1.setEmail("ooo@naver.com");
-		member1.setGender(Gender.FEMALE);
+		Member member1 = new Member("OOO", 20, "ooo@naver.com", Gender.FEMALE, null, null, null);
 		memberService.join(member1);
 		
-		Member member2 = new Member();
-		member2.setName("VVV");
-		member2.setAge(20);
-		member2.setEmail("vvv@naver.com");
-		member2.setGender(Gender.FEMALE);
+		Member member2 = new Member("VVV", 20, "vvv@naver.com", Gender.FEMALE, null, null, null);
 		memberService.join(member2);
 		
 		List<Member> MemberList = memberService.findMembers();
@@ -81,8 +73,7 @@ public class MemberServiceTest {
 		Diary diary = new Diary(9);
 		diaryService.save(diary);
 		
-		Member member = new Member("userZ", 50, "userZ@naver.com", Gender.FEMALE);
-		member.setDiary(diary);
+		Member member = new Member("userZ", 50, "userZ@naver.com", Gender.FEMALE, null, diary, null);
 		memberService.join(member);
 		
 		Member findMember = memberService.findOne(member.getId());
@@ -99,8 +90,7 @@ public class MemberServiceTest {
 		History history = new History("병력있음");
 		historyService.save(history);
 		
-		Member member = new Member("userX", 50, "userX@naver.com", Gender.FEMALE);
-		member.setHistory(history);
+		Member member = new Member("userX", 50, "userX@naver.com", Gender.FEMALE, null, null, history);
 		memberService.join(member);
 		
 		Member findMember = memberService.findOne(member.getId());
@@ -108,5 +98,21 @@ public class MemberServiceTest {
 		System.out.println("findMemberId = " + findMember.getId());
 		System.out.println("findMemberName = " + findMember.getName());
 		System.out.println("findMemberHistory = " + findMember.getHistory().getHistory());
+	}
+	
+	@Test
+	@Rollback(false)
+	public void 의사추가() throws Exception {
+		
+		Doctor findDoctor = doctorService.findOne(1L);
+		System.out.println("findDoctor = " + findDoctor.getName());
+		
+		Member findMember = memberService.findOne(2L);
+		findMember.changeDoctor(findDoctor);
+		
+		Member findMemberAndDoctor = memberService.findOne(findMember.getId());
+		
+		System.out.println("findMemberName = " + findMemberAndDoctor.getName());
+		System.out.println("findMemberDoctor = " + findMemberAndDoctor.getDoctor());
 	}
 }

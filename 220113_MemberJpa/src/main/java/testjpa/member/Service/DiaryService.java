@@ -8,8 +8,8 @@ import testjpa.member.domain.Diary;
 import testjpa.member.repository.DiaryRepository;
 
 @Service
-@Transactional(readOnly = true) //데이터 변경 X
-@RequiredArgsConstructor 	//final 생성자 생성
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class DiaryService {
 	
 	private final DiaryRepository diaryRepository;

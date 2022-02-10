@@ -32,14 +32,6 @@ public class MemberController {
 	
 	@PostMapping("/members/new")
 	public String create(@Valid MemberDto dto) {
-
-		Member member = new Member();
-		member.setName(dto.getName());
-		member.setAge(dto.getAge());
-		member.setGender(dto.getGender());
-		member.setEmail(dto.getEmail());
-		
-		memberService.join(member);
 		return "redirect:/";
 	}
 	

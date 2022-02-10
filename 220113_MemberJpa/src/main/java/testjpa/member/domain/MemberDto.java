@@ -29,6 +29,4 @@ public class MemberDto {
 	private String email;
 	
 	private RoleType roleType;
-	
-	private Info info;
 }
