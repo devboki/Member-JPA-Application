@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @DynamicInsert
 @ToString(of = {"id", "name", "gender", "age", "email", "roleType"})
-public class Member {
+public class Member extends BaseTimeEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
@@ -49,11 +49,11 @@ public class Member {
 	@JoinColumn(name = "diary_id") 
 	private Diary diary;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "doctor_id") 
 	private Doctor doctor;
 
-	public Member(String name, int age, String email, Gender gender, RoleType roleType, Diary diary, History history) {
+	public Member(String name, int age, String email, Gender gender, RoleType roleType, Diary diary, History history, Doctor doctor) {
 		this.name = name;
 		this.age = age;
 		this.email = email;
@@ -61,6 +61,7 @@ public class Member {
 		this.roleType = roleType;
 		this.diary = diary;
 		this.history = history;
+		this.doctor = doctor;
 	}
 
 	public void changeMember(Long id, String name, Gender gender, int age, String email) {

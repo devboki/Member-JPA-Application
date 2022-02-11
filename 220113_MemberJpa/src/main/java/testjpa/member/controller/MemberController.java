@@ -4,25 +4,25 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import testjpa.member.Service.MemberService;
 import testjpa.member.domain.Member;
 import testjpa.member.domain.MemberDto;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 	
 	private final MemberService memberService;
 
 	@GetMapping("/")
-	public String Home() {
-		return "home";
+	public String index() {
+		return "index.html";
 	}
 	
 	@GetMapping("/members/new")
@@ -39,6 +39,6 @@ public class MemberController {
 	public String list(Model model) {
 		List<Member> members = memberService.findMembers();
 		model.addAttribute("members", members);
-		return "members/memberList";
+		return "members/memberList.html";
 	}
 }

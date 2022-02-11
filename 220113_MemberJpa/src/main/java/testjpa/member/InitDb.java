@@ -43,12 +43,12 @@ public class InitDb {
 			em.persist(diary1);
 			em.persist(diary2);
 			
-			Doctor doctor1 = new Doctor(null, "doctorA", "doctor@sample.com", "신촌세브란스병원", RoleType.DOCTOR, null);
+			Doctor doctor1 = new Doctor(null, "doctorA", "doctor@sample.com", "치과A", RoleType.DOCTOR, null);
 			em.persist(doctor1);
 			
-			Member memberAdmin = new Member("admin", 30, "admin@sample.com", Gender.FEMALE, RoleType.ADMIN, null, null);
-			Member memberUser1 = new Member("userA", 20, "userA@sample.com", Gender.FEMALE, RoleType.USER, diary1, history1);
-			Member memberUser2 = new Member("userB", 20, "userB@sample.com", Gender.MALE, RoleType.USER, diary2, history2);
+			Member memberAdmin = new Member("admin", 30, "admin@sample.com", Gender.FEMALE, RoleType.ADMIN, null, null, null);
+			Member memberUser1 = new Member("userA", 20, "userA@sample.com", Gender.FEMALE, RoleType.USER, diary1, history1, doctor1);
+			Member memberUser2 = new Member("userB", 20, "userB@sample.com", Gender.MALE, RoleType.USER, diary2, history2, doctor1);
 			em.persist(memberAdmin);
 			em.persist(memberUser1);
 			em.persist(memberUser2);

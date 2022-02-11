@@ -18,6 +18,7 @@ import testjpa.member.domain.Doctor;
 import testjpa.member.domain.Gender;
 import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
+import testjpa.member.repository.MemberRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,11 +29,11 @@ public class MemberServiceTest {
 	@Autowired DiaryService diaryService;
 	@Autowired HistoryService historyService;
 	@Autowired DoctorService doctorService;
-	
+		
 	@Test
 	@Rollback(false)
 	public void 회원가입() throws Exception {
-		Member member = new Member("userK", 50, "userK@naver.com", Gender.FEMALE, null, null, null);
+		Member member = new Member("userK", 50, "userK@naver.com", Gender.FEMALE, null, null, null, null);
 		
 		Long saveId = memberService.join(member);
 		
@@ -42,10 +43,10 @@ public class MemberServiceTest {
 	
 	@Test
 	public void 중복_회원_예외() {
-		Member member1 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null);
+		Member member1 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null, null);
 		memberService.join(member1);
 		
-		Member member2 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null);
+		Member member2 = new Member("email1", 30, "test@test.com", Gender.FEMALE, null, null, null, null);
 		
 		assertThrows(IllegalStateException.class, () -> { 
 			memberService.join(member2); //member1과 이메일이 다르면 테스트 실패
@@ -55,10 +56,10 @@ public class MemberServiceTest {
 	@Test
 	@Rollback(false)
 	public void 전체_회원_조회() throws Exception {
-		Member member1 = new Member("OOO", 20, "ooo@naver.com", Gender.FEMALE, null, null, null);
+		Member member1 = new Member("OOO", 20, "ooo@naver.com", Gender.FEMALE, null, null, null, null);
 		memberService.join(member1);
 		
-		Member member2 = new Member("VVV", 20, "vvv@naver.com", Gender.FEMALE, null, null, null);
+		Member member2 = new Member("VVV", 20, "vvv@naver.com", Gender.FEMALE, null, null, null, null);
 		memberService.join(member2);
 		
 		List<Member> MemberList = memberService.findMembers();
@@ -73,7 +74,7 @@ public class MemberServiceTest {
 		Diary diary = new Diary(9);
 		diaryService.save(diary);
 		
-		Member member = new Member("userZ", 50, "userZ@naver.com", Gender.FEMALE, null, diary, null);
+		Member member = new Member("userZ", 50, "userZ@naver.com", Gender.FEMALE, null, diary, null, null);
 		memberService.join(member);
 		
 		Member findMember = memberService.findOne(member.getId());
@@ -90,7 +91,7 @@ public class MemberServiceTest {
 		History history = new History("병력있음");
 		historyService.save(history);
 		
-		Member member = new Member("userX", 50, "userX@naver.com", Gender.FEMALE, null, null, history);
+		Member member = new Member("userX", 50, "userX@naver.com", Gender.FEMALE, null, null, history, null);
 		memberService.join(member);
 		
 		Member findMember = memberService.findOne(member.getId());
@@ -99,20 +100,37 @@ public class MemberServiceTest {
 		System.out.println("findMemberName = " + findMember.getName());
 		System.out.println("findMemberHistory = " + findMember.getHistory().getHistory());
 	}
-	
+
 	@Test
 	@Rollback(false)
-	public void 의사추가() throws Exception {
+	public void 의사변경() throws Exception {
+		Doctor doctorB = new Doctor("doctorB", "doctorB@sample.com", "치과B");
+		doctorService.join(doctorB);
 		
+		Member member1 = new Member("OOO", 20, "ooo@naver.com", Gender.FEMALE, null, null, null, doctorB);
+		Member member2 = new Member("VVV", 20, "vvv@naver.com", Gender.FEMALE, null, null, null, doctorB);
+		memberService.join(member1);
+		memberService.join(member2);
+		
+		Doctor findDoctorA = doctorService.findOne(1L);
+		member2.changeDoctor(findDoctorA);
+		
+		System.out.println("member1's Doctor name = " + member1.getDoctor().getName());
+		System.out.println("member2's Doctor name = " + member2.getDoctor().getName());
+		
+		/*
 		Doctor findDoctor = doctorService.findOne(1L);
-		System.out.println("findDoctor = " + findDoctor.getName());
+		Member findMember1 = memberService.findOne(2L);
+		Member findMember2 = memberService.findOne(3L);
+
+		findMember1.changeDoctor(findDoctor);
+		findMember2.changeDoctor(findDoctor);
 		
-		Member findMember = memberService.findOne(2L);
-		findMember.changeDoctor(findDoctor);
-		
-		Member findMemberAndDoctor = memberService.findOne(findMember.getId());
-		
-		System.out.println("findMemberName = " + findMemberAndDoctor.getName());
-		System.out.println("findMemberDoctor = " + findMemberAndDoctor.getDoctor());
+		System.out.println("findMember1Name = " + findMember1.getName());
+		System.out.println("findMember1DoctorName = " + findMember1.getDoctor().getName());
+
+		System.out.println("findMember2 = " + findMember2.toString());
+		System.out.println("findMemberDoctorInfo = " + findMember2.getDoctor());
+		*/
 	}
 }

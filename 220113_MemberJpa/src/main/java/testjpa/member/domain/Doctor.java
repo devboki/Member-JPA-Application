@@ -8,8 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.BatchSize;
@@ -28,7 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @DynamicInsert
 @ToString(of = {"id", "name", "email", "hospital", "roleType"})
-public class Doctor {
+public class Doctor extends BaseTimeEntity {
 
 	@Id @GeneratedValue
 	@Column(name = "doctor_id")
@@ -50,5 +53,11 @@ public class Doctor {
 	
 	@OneToMany(mappedBy = "doctor")
 	@BatchSize(size = 100)
-	private List<Member> members = new ArrayList<>();
+	private List<Member> members = new ArrayList<Member>();
+	
+	public Doctor(String name, String email, String hospital) {
+		this.name = name;
+		this.email = email;
+		this.hospital = hospital;
+	}
 }
