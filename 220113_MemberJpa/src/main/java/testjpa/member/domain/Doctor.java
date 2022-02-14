@@ -10,14 +10,17 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,11 +32,16 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@DynamicInsert
 @ToString(of = {"id", "name", "email", "hospital", "roleType"})
+@DynamicUpdate
+@DynamicInsert
+@SequenceGenerator(name = "DOCTOR_SEQ_GENERATOR",
+					sequenceName = "DOCTOR_SEQ",
+					initialValue = 1, allocationSize = 1)
 public class Doctor extends BaseTimeEntity {
 
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
+						generator = "DOCTOR_SEQ_GENERATOR")
 	@Column(name = "doctor_id")
 	private Long id;
 	

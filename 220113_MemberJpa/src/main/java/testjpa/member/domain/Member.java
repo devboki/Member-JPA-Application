@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,14 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @DynamicInsert
+@DynamicUpdate
 @ToString(of = {"id", "name", "gender", "age", "email", "roleType"})
+@SequenceGenerator(name = "MEMBER_SEQ_GENERATOR",
+					sequenceName = "MEMBER_SEQ",
+					initialValue = 1, allocationSize = 1) 
 public class Member extends BaseTimeEntity {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
 	@Column(name = "member_id")
 	private Long id;
 	

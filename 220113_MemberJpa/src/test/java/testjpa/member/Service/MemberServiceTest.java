@@ -112,7 +112,7 @@ public class MemberServiceTest {
 		memberService.join(member1);
 		memberService.join(member2);
 		
-		Doctor findDoctorA = doctorService.findOne(1L);
+		Doctor findDoctorA = doctorService.findOne(5L);
 		member2.changeDoctor(findDoctorA);
 		
 		System.out.println("member1's Doctor name = " + member1.getDoctor().getName());
