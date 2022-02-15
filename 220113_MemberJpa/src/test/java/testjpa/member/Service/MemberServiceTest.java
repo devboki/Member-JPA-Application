@@ -14,11 +14,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import testjpa.member.domain.Diary;
-import testjpa.member.domain.Doctor;
 import testjpa.member.domain.Gender;
 import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
-import testjpa.member.repository.MemberRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -101,6 +99,7 @@ public class MemberServiceTest {
 		System.out.println("findMemberHistory = " + findMember.getHistory().getHistory());
 	}
 
+	/*
 	@Test
 	@Rollback(false)
 	public void 의사변경() throws Exception {
@@ -112,7 +111,7 @@ public class MemberServiceTest {
 		memberService.join(member1);
 		memberService.join(member2);
 		
-		Doctor findDoctorA = doctorService.findOne(5L);
+		Doctor findDoctorA = doctorService.findOne(1L);
 		member2.changeDoctor(findDoctorA);
 		
 		System.out.println("member1's Doctor name = " + member1.getDoctor().getName());
@@ -130,7 +129,20 @@ public class MemberServiceTest {
 		System.out.println("findMember1DoctorName = " + findMember1.getDoctor().getName());
 
 		System.out.println("findMember2 = " + findMember2.toString());
-		System.out.println("findMemberDoctorInfo = " + findMember2.getDoctor());
-		*/
+		System.out.println("findMemberDoctorInfo = " + findMember2.getDoctor()); */
+		
+	//}
+	
+	@Test
+	@Rollback(false)
+	public void 빌더() {
+		Member memberBuilder = Member.MemberBuilder()
+				.name("memberBuilder")
+				.build(); //role_type USER @DynamicInsert
+	
+		memberService.join(memberBuilder);
+	
+		memberBuilder.changeMember("BBB", Gender.FEMALE, 30, "bbb@sample.com"); //role_type NULL @DynamicUpdate
+		System.out.println(memberBuilder.toString());
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import testjpa.member.domain.Diary;
 import testjpa.member.domain.Doctor;
+import testjpa.member.domain.DoctorDto;
 import testjpa.member.domain.Gender;
 import testjpa.member.domain.History;
 import testjpa.member.domain.Member;
@@ -33,6 +34,7 @@ public class InitDb {
 		private final EntityManager em;
 		
 		public void dbInit() {
+			/*
 			History history1 = new History("피부질환");
 			History history2 = new History("관절염");
 			em.persist(history1);
@@ -52,6 +54,55 @@ public class InitDb {
 			em.persist(memberAdmin);
 			em.persist(memberUser1);
 			em.persist(memberUser2);
+			*/
+			
+			Doctor doctor1 = Doctor.builder()
+					.id("doctor1")
+					.password("abcd")
+					.phoneNumber("000-0000-0000")
+					.buisnessNumber("123-45-12345")
+					.build();
+			
+			Doctor doctor2 = Doctor.builder()
+					.id("doctor2")
+					.build();
+			
+			Doctor doctor3 = Doctor.builder()
+					.id("doctor3")
+					.build();
+			
+			em.persist(doctor1);
+			em.persist(doctor2);
+			em.persist(doctor3);
+			
+			Member admin = Member.MemberBuilder()
+					.name("admin")
+					.roleType(RoleType.ADMIN)
+					.build();
+			
+			Member member1 = Member.MemberBuilder()
+					.name("member1")
+					.build();
+			
+			Member member2 = Member.MemberBuilder()
+					.name("member2")
+					.build();
+			
+			Member member3 = Member.MemberBuilder()
+					.name("member3")
+					.build();
+			
+			em.persist(admin);
+			em.persist(member1);
+			em.persist(member2);
+			em.persist(member3);
+			
+			member1.changeDoctor(doctor1);
+			member2.changeDoctor(doctor1);
+			member3.changeDoctor(doctor3);
+			
+			em.flush();
+			em.clear();
 		}
 	}
 }

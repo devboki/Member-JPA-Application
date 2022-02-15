@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import testjpa.member.domain.Doctor;
 
-public interface DoctorRepository extends JpaRepository<Doctor, Long>{
-	List<Doctor> findByName(String name);
+public interface DoctorRepository extends JpaRepository<Doctor, String>{
+	boolean existsById(String id);
+
 }

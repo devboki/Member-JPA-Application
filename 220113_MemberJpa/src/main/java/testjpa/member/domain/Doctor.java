@@ -24,48 +24,40 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import testjpa.member.domain.Member.MemberBuilder;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString(of = {"id", "name", "email", "hospital", "roleType"})
+@ToString(of = {"id", "password", "phoneNumber", "buisnessNumber"})
 @DynamicUpdate
 @DynamicInsert
-@SequenceGenerator(name = "DOCTOR_SEQ_GENERATOR",
-					sequenceName = "DOCTOR_SEQ",
-					initialValue = 1, allocationSize = 1)
 public class Doctor extends BaseTimeEntity {
 
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,
-						generator = "DOCTOR_SEQ_GENERATOR")
+	@Id
 	@Column(name = "doctor_id")
-	private Long id;
+	private String id;
 	
-	@Column(length = 20)
-	private String name;
+	private String password;
 	
-	@Column(length = 100)
-	private String email;
+	private String phoneNumber;
 	
-	@Column(length = 100)
-	private String hospital;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(length = 10)
-	@ColumnDefault("'DOCTOR'")
-	private RoleType roleType;
+	private String buisnessNumber;
 	
 	@OneToMany(mappedBy = "doctor")
 	@BatchSize(size = 100)
 	private List<Member> members = new ArrayList<Member>();
 	
-	public Doctor(String name, String email, String hospital) {
-		this.name = name;
-		this.email = email;
-		this.hospital = hospital;
+	@Builder
+	public Doctor(String id, String password, String phoneNumber, String buisnessNumber) {
+		this.id = id;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.buisnessNumber = buisnessNumber;
 	}
 }
