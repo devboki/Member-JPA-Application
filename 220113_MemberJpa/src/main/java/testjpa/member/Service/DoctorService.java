@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import testjpa.member.domain.Doctor;
 import testjpa.member.domain.DoctorDto;
+import testjpa.member.domain.Member;
 import testjpa.member.repository.DoctorRepository;
 
 @Service
@@ -35,8 +38,28 @@ public class DoctorService {
 	}
 	
 	/* 전체 의사 조회 : DTO */
-	public List<DoctorDto> getAllDoctors() {
+	public List<DoctorDto> findAllDoctorDto() {
 		return doctorRepository.findAll().stream().map(DoctorDto::fromEntity).collect(Collectors.toList());
+	}
+	
+	/* 전체 의사 조회 : Entity */
+	public List<Doctor> findAllDoctor(){
+		return doctorRepository.findAll();
+	}
+	
+	/* 의사 한명 조회 : Optional */
+	public Optional<Doctor> findDoctorIdOptional(String doctorId) {
+		return doctorRepository.findById(doctorId);
+	}
+
+	/* 의사 한명 조회 : 단건 */
+	public Doctor findDoctorById(String doctorId) {
+		return doctorRepository.findDoctorById(doctorId);
+	}
+	
+	/* 환자 조회 : Entity 개발중 */
+	public Page<Doctor> findAllMember(Pageable pageable){
+		return doctorRepository.findAllMember(pageable);
 	}
 	
 	/* 탈퇴 */
@@ -45,11 +68,6 @@ public class DoctorService {
 		doctorRepository.deleteById(doctorId);
 	}
 
-	/* 의사 한명 조회 */
-	public Optional<Doctor> findDoctorId(String doctorId) {
-		return doctorRepository.findById(doctorId);
-	}
-
-	/* 환자 조회 */
+	
 	
 }

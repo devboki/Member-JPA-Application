@@ -22,6 +22,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +53,8 @@ public class Doctor extends BaseTimeEntity {
 	
 	@OneToMany(mappedBy = "doctor")
 	@BatchSize(size = 100)
-	private List<Member> members = new ArrayList<Member>();
+	@JsonIgnore
+	private List<Member> members = new ArrayList<>();
 	
 	@Builder
 	public Doctor(String id, String password, String phoneNumber, String buisnessNumber) {
