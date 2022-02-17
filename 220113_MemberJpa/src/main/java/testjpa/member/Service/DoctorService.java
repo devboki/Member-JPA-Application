@@ -57,9 +57,14 @@ public class DoctorService {
 		return doctorRepository.findDoctorById(doctorId);
 	}
 	
-	/* 환자 조회 : Entity 개발중 */
-	public Page<Doctor> findAllMember(Pageable pageable){
-		return doctorRepository.findAllMember(pageable);
+	/* 환자 조회 : Entity 개발중 : Object 출력되는 이슈 */
+	public Page<Doctor> findAllMember(String doctorId, Pageable pageable){
+		return doctorRepository.findAllMember(doctorId, pageable);
+	}
+	
+	/* 환자 조회 : fetch join */
+	public List<Doctor> findDoctorMember(String doctorId){
+		return doctorRepository.findDoctorMember(doctorId);
 	}
 	
 	/* 탈퇴 */

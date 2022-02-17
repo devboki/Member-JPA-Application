@@ -51,7 +51,7 @@ public class Doctor extends BaseTimeEntity {
 	
 	private String buisnessNumber;
 	
-	@OneToMany(mappedBy = "doctor")
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
 	@BatchSize(size = 100)
 	@JsonIgnore
 	private List<Member> members = new ArrayList<>();

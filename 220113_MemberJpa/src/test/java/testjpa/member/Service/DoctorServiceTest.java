@@ -1,7 +1,11 @@
 package testjpa.member.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,8 +22,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import testjpa.member.domain.Doctor;
+import testjpa.member.domain.DoctorDto;
 import testjpa.member.domain.Member;
-import testjpa.member.repository.DoctorRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,7 +55,7 @@ public class DoctorServiceTest {
 	}
 
 	@Test
-	public void 환자조회_entitymanager() {
+	public void 환자조회_entitymanager_getMembers() {
 		Doctor doctor = em.find(Doctor.class, "doctor1");
 		List<Member> members = doctor.getMembers();
 		
@@ -64,7 +68,7 @@ public class DoctorServiceTest {
 	}
 
 	@Test
-	public void 환자조회_repository() {
+	public void 환자조회_repository_getMembers() {
 	
 		Doctor doctor1 = doctorService.findDoctorById("doctor1");
 		System.out.println("doctor1's members = " + doctor1.getMembers().size());
@@ -72,15 +76,41 @@ public class DoctorServiceTest {
 		
 //		doctor1's members = 2
 //		doctor1's memberList = [Member(id=2, name=member1, gender=null, age=0, email=null, roleType=USER), Member(id=3, name=member2, gender=null, age=0, email=null, roleType=USER)]
-
-		PageRequest pageRequest = PageRequest.of(0, 1);
-		Page<Doctor> page = doctorService.findAllMember(pageRequest);
-		List<Doctor> content = page.getContent();
-		long totalElements = page.getTotalElements();
-		
-		/* 쿼리 에러 확인 */
-		
 	}
 	
+	@Test
+	public void 환자조회_paging() {
+		
+		PageRequest pageRequest = PageRequest.of(0, 3); //doctor3인 member 첫 페이지는 0, 한 페이지에 3개 보이도록
+		Page<Doctor> result = doctorService.findAllMember("doctor3", pageRequest);  
+		 			
+	    System.out.println(result.getTotalPages()); 	//총 데이터 5개를 3개씩 : 2페이지
+	    System.out.println(result.getTotalElements());  //총 데이터 5개
+	    System.out.println(result.nextPageable());		//Page request [number: 1, size 3]
+
+	    List<Doctor> content = result.getContent();
+		System.out.println(content.size());				//조회된 데이터 : 3개
+		System.out.println(content.stream().collect(Collectors.toList()));
+		
+		/* Object 출력 이슈
+		[[Ljava.lang.Object;@6c225adb, [Ljava.lang.Object;@69cc49ec, [Ljava.lang.Object;@6b71e98f] */		
+	}
+	
+	@Test
+	public void 환자조회_fetch_join() {
+		
+		List<Doctor> doctor3 = doctorService.findDoctorMember("doctor3");
+		for (Doctor doctor : doctor3) {
+			System.out.println("doctor3MemberList = " + doctor);
+		}
+		
+//		doctor3MemberList = Doctor(id=doctor3, password=null, phoneNumber=null, buisnessNumber=null)
+//		doctor3MemberList = Doctor(id=doctor3, password=null, phoneNumber=null, buisnessNumber=null)
+//		doctor3MemberList = Doctor(id=doctor3, password=null, phoneNumber=null, buisnessNumber=null)
+//		doctor3MemberList = Doctor(id=doctor3, password=null, phoneNumber=null, buisnessNumber=null)
+//		doctor3MemberList = Doctor(id=doctor3, password=null, phoneNumber=null, buisnessNumber=null)
+		
+		/* MemberList X DoctorList 출력 이슈 */
+	}
 	
 }

@@ -34,6 +34,7 @@ public class InitDb {
 		private final EntityManager em;
 		
 		public void dbInit() {
+			
 			/*
 			History history1 = new History("피부질환");
 			History history2 = new History("관절염");
@@ -92,14 +93,48 @@ public class InitDb {
 					.name("member3")
 					.build();
 			
+			Member member4 = Member.MemberBuilder()
+					.name("member4")
+					.build();
+			
+			Member member5 = Member.MemberBuilder()
+					.name("member5")
+					.build();
+			
+			Member member6 = Member.MemberBuilder()
+					.name("member6")
+					.build();
+			
+			Member member7 = Member.MemberBuilder()
+					.name("member7")
+					.build();
+			
+			Member member8 = Member.MemberBuilder()
+					.name("member8")
+					.build();
+			
+			Member member9 = Member.MemberBuilder()
+					.name("member9")
+					.build();
+			
 			em.persist(admin);
 			em.persist(member1);
 			em.persist(member2);
 			em.persist(member3);
+			em.persist(member4);
+			em.persist(member5);
+			em.persist(member6);
+			em.persist(member7);
+			em.persist(member8);
+			em.persist(member9);
 			
 			member1.changeDoctor(doctor1);
 			member2.changeDoctor(doctor1);
 			member3.changeDoctor(doctor3);
+			member4.changeDoctor(doctor3);
+			member5.changeDoctor(doctor3);
+			member6.changeDoctor(doctor3);
+			member7.changeDoctor(doctor3);
 			
 			em.flush();
 			em.clear();
