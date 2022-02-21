@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import testjpa.member.domain.Doctor;
 import testjpa.member.domain.DoctorDto;
 import testjpa.member.domain.Member;
+import testjpa.member.domain.MemberDto;
 import testjpa.member.repository.DoctorRepository;
 
 @Service
@@ -57,14 +58,14 @@ public class DoctorService {
 		return doctorRepository.findDoctorById(doctorId);
 	}
 	
-	/* 환자 조회 : Entity 개발중 : Object 출력되는 이슈 */
-	public Page<Doctor> findAllMember(String doctorId, Pageable pageable){
-		return doctorRepository.findAllMember(doctorId, pageable);
+	/* 환자 조회 : fetch join + Dto */
+	public List<MemberDto> findDoctorMember(String doctorId){
+		return doctorRepository.findDoctorMember(doctorId);
 	}
 	
-	/* 환자 조회 : fetch join */
-	public List<Doctor> findDoctorMember(String doctorId){
-		return doctorRepository.findDoctorMember(doctorId);
+	/* 환자 조회 : paging + Dto */
+	public Page<MemberDto> findAllMember(String doctorId, Pageable pageable){
+		return doctorRepository.findAllMember(doctorId, pageable);
 	}
 	
 	/* 탈퇴 */

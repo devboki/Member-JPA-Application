@@ -10,16 +10,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import testjpa.member.domain.Doctor;
+import testjpa.member.domain.MemberDto;
 
 public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	boolean existsById(String id);
 
-	/* 개발중 : .getContent() -> <Doctor> X <Object> 출력되는 이슈 */
-	@Query(value = "SELECT d, m FROM Doctor d LEFT JOIN d.members m where d.id in :id")
-	Page<Doctor> findAllMember( @Param("id") String doctorId, Pageable pageable);
-	
-	@Query(value = "SELECT d, m FROM Doctor d LEFT JOIN d.members m where d.id in :id")
-	List<Doctor> findDoctorMember(@Param("id") String doctorId);
+	@Query(value = "select new testjpa.member.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
+	List<MemberDto> findDoctorMember(@Param("id") String doctorId);
+
+	@Query(value = "select new testjpa.member.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
+	Page<MemberDto> findAllMember( @Param("id") String doctorId, Pageable pageable);
 	
 	Doctor findDoctorById(String id);
 }

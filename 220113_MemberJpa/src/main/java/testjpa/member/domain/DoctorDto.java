@@ -39,4 +39,7 @@ public class DoctorDto {
 				.buisnessNumber(doctor.getBuisnessNumber())
 				.build();
 	}
+
+	public DoctorDto(Doctor doctor) {
+	}
 }

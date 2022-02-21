@@ -29,4 +29,21 @@ public class MemberDto {
 	private String email;
 	
 	private RoleType roleType;
+	
+	private Diary diary;
+	
+	private History history;
+	
+	public MemberDto(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	
+	public MemberDto(History history) {
+		this.history = history;
+	}
+	
+	public MemberDto(Diary diary) {
+		this.diary = diary;
+	}
 }

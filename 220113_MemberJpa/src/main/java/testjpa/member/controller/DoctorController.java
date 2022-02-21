@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import testjpa.member.Service.DoctorService;
 import testjpa.member.domain.DoctorDto;
-import testjpa.member.domain.Member;
+import testjpa.member.domain.MemberDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,11 +22,8 @@ public class DoctorController {
 		return doctorService.findAllDoctorDto();
 	}
 	
-//	/* doctorId로 memberList 조회 */
-//	@GetMapping("/doctor/members/{doctorId}")
-//	public List<Member> findAllMembers(@PathVariable String doctorId){
-//		return doctorService.findAllMember(doctorId);
-//	}//@RequestBody 어노테이션 검색해보기
-
-	
+	@GetMapping("/doctor/members/{id}")
+	public List<MemberDto> findDoctorMembers(@PathVariable("id") String doctorId){
+		return doctorService.findDoctorMember(doctorId);
+	}
 }
