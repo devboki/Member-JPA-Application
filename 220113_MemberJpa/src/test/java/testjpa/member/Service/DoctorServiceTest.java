@@ -1,12 +1,8 @@
 package testjpa.member.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import testjpa.member.domain.Doctor;
 import testjpa.member.domain.DoctorDto;
-import testjpa.member.domain.Member;
 import testjpa.member.domain.MemberDto;
 
 @RunWith(SpringRunner.class)
@@ -50,7 +44,7 @@ public class DoctorServiceTest {
 		Optional<DoctorDto> findDoctorDto0 = findDoctor0.map(d -> new DoctorDto(d.getId(), d.getPassword(), d.getPhoneNumber(), d.getBuisnessNumber()));
 		Optional<DoctorDto> findDoctorDto1= findDoctor1.map(d -> new DoctorDto(d.getId(), d.getPassword(), d.getPhoneNumber(), d.getBuisnessNumber()));
 		System.out.println("findDoctorDto0 = " + findDoctorDto0);
-		System.out.println("findDoctorDto0 = " + findDoctorDto1);
+		System.out.println("findDoctorDto1 = " + findDoctorDto1);
 		
 //		findDoctorDto0 = Optional.empty
 //		findDoctorDto0 = Optional[DoctorDto(id=doctor1, password=abcd, phoneNumber=000-0000-0000, buisnessNumber=123-45-12345)]
@@ -69,35 +63,11 @@ public class DoctorServiceTest {
 		
 //		delete from doctor where doctor_id='doctor1';
 	}
-
-	@Test
-	public void 환자조회_entitymanager_getMembers() {
-		Doctor doctor = em.find(Doctor.class, "doctor1");
-		List<Member> members = doctor.getMembers();
-		
-		for (Member member : members) {
-			System.out.println("doctor1's members = " + member.toString());
-		}
-		
-//		doctor1's members = member1
-//		doctor1's members = member2
-	}
-
-	@Test
-	public void 환자조회_repository_getMembers() {
-	
-		Doctor doctor1 = doctorService.findDoctorById("doctor1");
-		System.out.println("doctor1's members = " + doctor1.getMembers().size());
-		System.out.println("doctor1's memberList = " + doctor1.getMembers().toString());
-		
-//		doctor1's members = 2
-//		doctor1's memberList = [Member(id=2, name=member1, gender=null, age=0, email=null, roleType=USER), Member(id=3, name=member2, gender=null, age=0, email=null, roleType=USER)]
-	}
 	
 	@Test
 	public void 환자조회_fetch_join_Dto() {
 		
-		List<MemberDto> doctor3Members = doctorService.findDoctorMember("doctor3");
+		List<MemberDto> doctor3Members = doctorService.findMemberDto("doctor3");
 		System.out.println(doctor3Members);
 		
 //		[MemberDto(id=4, name=member3, gender=null, age=0, email=null, roleType=null, diary=null, history=null), 

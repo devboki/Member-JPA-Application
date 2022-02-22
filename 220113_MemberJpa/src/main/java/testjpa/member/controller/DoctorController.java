@@ -22,8 +22,13 @@ public class DoctorController {
 		return doctorService.findAllDoctorDto();
 	}
 	
+	@GetMapping("/doctor/{id}")
+	public List<DoctorDto> findDoctorDto(@PathVariable("id") String doctorId) {
+		return doctorService.findDoctorDto(doctorId);
+	}
+	
 	@GetMapping("/doctor/members/{id}")
-	public List<MemberDto> findDoctorMembers(@PathVariable("id") String doctorId){
-		return doctorService.findDoctorMember(doctorId);
+	public List<MemberDto> findMemberDto(@PathVariable("id") String doctorId){
+		return doctorService.findMemberDto(doctorId);
 	}
 }

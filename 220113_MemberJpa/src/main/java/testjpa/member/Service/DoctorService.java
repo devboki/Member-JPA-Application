@@ -2,6 +2,7 @@ package testjpa.member.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -48,19 +49,19 @@ public class DoctorService {
 		return doctorRepository.findAll();
 	}
 	
-	/* 의사 한명 조회 : Optional */
+	/* 의사 한명 조회 : Optional Entity */
 	public Optional<Doctor> findDoctorIdOptional(String doctorId) {
 		return doctorRepository.findById(doctorId);
 	}
-
-	/* 의사 한명 조회 : 단건 */
-	public Doctor findDoctorById(String doctorId) {
-		return doctorRepository.findDoctorById(doctorId);
+	
+	/* 의사 한명 조회 : Dto */
+	public List<DoctorDto> findDoctorDto(String doctorId) {
+		return doctorRepository.findDoctorDto(doctorId);
 	}
 	
 	/* 환자 조회 : fetch join + Dto */
-	public List<MemberDto> findDoctorMember(String doctorId){
-		return doctorRepository.findDoctorMember(doctorId);
+	public List<MemberDto> findMemberDto(String doctorId){
+		return doctorRepository.findMemberDto(doctorId);
 	}
 	
 	/* 환자 조회 : paging + Dto */
