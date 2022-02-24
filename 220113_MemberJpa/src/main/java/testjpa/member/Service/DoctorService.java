@@ -49,6 +49,11 @@ public class DoctorService {
 		return doctorRepository.findAll();
 	}
 	
+	/* 의사 한명 조회 : Entity */
+	public Doctor findDoctorOne(String doctorId){
+		return doctorRepository.findDoctorOne(doctorId);
+	}
+	
 	/* 의사 한명 조회 : Optional Entity */
 	public Optional<Doctor> findDoctorIdOptional(String doctorId) {
 		return doctorRepository.findById(doctorId);
@@ -68,6 +73,13 @@ public class DoctorService {
 	public Page<MemberDto> findAllMember(String doctorId, Pageable pageable){
 		return doctorRepository.findAllMember(doctorId, pageable);
 	}
+
+	/* 수정 */
+	@Transactional
+	public void update(String doctorId, String password, String phoneNumber) {
+		Doctor doctor = doctorRepository.findDoctorOne(doctorId);
+		doctor.changeDoctor(password, phoneNumber);
+	}
 	
 	/* 탈퇴 */
 	@Transactional
@@ -75,6 +87,5 @@ public class DoctorService {
 		doctorRepository.deleteById(doctorId);
 	}
 
-	
 	
 }

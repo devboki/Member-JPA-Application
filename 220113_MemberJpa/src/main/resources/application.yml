@@ -1,7 +1,8 @@
 server:
   port: 8088
   
-spring:  datasource:    url: jdbc:h2:tcp://localhost/~/jpashop;
+spring:
+  mvc:    view:      suffix: .html  datasource:    url: jdbc:h2:tcp://localhost/~/jpashop;
     username: sa
     password: 
     driver-class-name: org.h2.Driver

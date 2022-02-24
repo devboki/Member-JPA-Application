@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>DOCTOR JOIN</title>
+<title></title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="col-md-6">
 	<h1>회원 가입</h1>
-	<form action="/members/new" method="post">
-		이름 <input type="text" id="name" name="name" placeholder="이름을 입력하세요"><br>
-		나이 <input type="text" id="age" name="age" placeholder="나이를 입력하세요"><br>
-		성별 <input type="radio" id="gender" name="gender" value="FEMALE">여자 <input type="radio" id="gender" name="gender" value="MALE">남자<br>
-		메일 <input type="text" id="email" name="email" placeholder="sample@email.com"><br><br>
+	<form action="/doctor/new" th:object="${joinForm}" method="post">
+		아이디 <input type="text" th:field="*{id}" placeholder="이름을 입력하세요"><br>
+		비밀번호 <input type="text" th:field="*{password}" placeholder="나이를 입력하세요"><br>
+		핸드폰번호 <input type="text" th:field="*{phoneNumber}" placeholder="핸드폰번호를 입력하세요"><br>
+		사업자번호 <input type="text" th:field="*{buisinessNumber}" placeholder="사업자번호를 입력하세요"><br><br>
 		
 		<button type="submit">가입하기</button> <button type="reset">취소</button>
 	</form><br>

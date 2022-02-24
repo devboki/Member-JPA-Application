@@ -63,4 +63,9 @@ public class Doctor extends BaseTimeEntity {
 		this.phoneNumber = phoneNumber;
 		this.buisnessNumber = buisnessNumber;
 	}
+	
+	public void changeDoctor(String password, String phoneNumber) {
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+	}
 }

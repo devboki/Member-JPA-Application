@@ -19,11 +19,6 @@ import testjpa.member.domain.MemberDto;
 public class MemberController {
 	
 	private final MemberService memberService;
-
-	@GetMapping("/")
-	public String index() {
-		return "index.html";
-	}
 	
 	@GetMapping("/members/new")
 	public String joinForm() {
