@@ -83,7 +83,7 @@ public class DoctorService {
 	@Transactional
 	public void update(String doctorId, String password, String phoneNumber) {
 		Doctor doctor = doctorRepository.findDoctorOne(doctorId);
-		doctor.changeDoctor(password, phoneNumber);
+		doctor.changeDoctor(doctor.getId(), password, phoneNumber);
 	}
 	
 	/* 탈퇴 */

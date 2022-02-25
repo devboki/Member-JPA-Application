@@ -121,7 +121,7 @@ public class DoctorServiceTest {
 	@Rollback(false)
 	public void 의사수정() {
 		Doctor findDoctor = doctorService.findDoctorOneId("doctor3");
-		findDoctor.changeDoctor("Abc1234!", "010-4560-7890");
+		findDoctor.changeDoctor(findDoctor.getId(), "Abc1234!", "010-4560-7890");
 		List<DoctorDto> updateDoctor = doctorService.findDoctorDto(findDoctor.getId());
 		System.out.println("updateDoctor = " + updateDoctor);
 		

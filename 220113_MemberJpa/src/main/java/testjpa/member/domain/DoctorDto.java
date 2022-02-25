@@ -40,6 +40,5 @@ public class DoctorDto {
 				.build();
 	}
 
-	public DoctorDto(Doctor doctor) {
-	}
+	public DoctorDto(Doctor doctor) { }
 }

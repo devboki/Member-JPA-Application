@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import testjpa.member.Service.DoctorService;
 import testjpa.member.domain.Doctor;
@@ -55,8 +56,18 @@ public class DoctorController {
 	
 	/* 개발중 */
 	@PutMapping("/api/doctor/{id}")
-	public DoctorDto updateDoctor(@PathVariable("id") String doctorId,
-										@RequestBody @Valid DoctorDto dto){
-		return null;
+	public List<DoctorDto> updateDoctor(@PathVariable("id") String doctorId,
+										@RequestBody @Valid UpdateDoctorDto updateDto){
+		
+		Doctor findDoctor = doctorService.findDoctorOneId(doctorId);
+		findDoctor.changeDoctor(findDoctor.getId(), updateDto.getPassword(), updateDto.getPhoneNumber());
+
+		return doctorService.findDoctorDto(findDoctor.getId());
+	}
+	
+	@Data
+	static class UpdateDoctorDto {
+		private String password;
+		private String phoneNumber;
 	}
 }
