@@ -24,9 +24,12 @@ public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	List<MemberDto> findMemberDto(@Param("id") String doctorId);
 
 	@Query(value = "select new testjpa.member.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
-	Page<MemberDto> findAllMember( @Param("id") String doctorId, Pageable pageable);
+	Page<MemberDto> findAllMember(@Param("id") String doctorId, Pageable pageable);
 	
-	@Query("select d.id from Doctor d")
+	@Query("select d from Doctor d")
 	Doctor findDoctorOne(String doctorId);
+	
+	@Query("select d from Doctor d where d.id = :id")
+	Doctor findDoctorOneId(@Param("id") String doctorId);
 
 }

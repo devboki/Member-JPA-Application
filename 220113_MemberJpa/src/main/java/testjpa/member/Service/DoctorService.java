@@ -54,6 +54,11 @@ public class DoctorService {
 		return doctorRepository.findDoctorOne(doctorId);
 	}
 	
+	/* 의사 한명 조회 : Entity + Id*/
+	public Doctor findDoctorOneId(String doctorId) {
+		return doctorRepository.findDoctorOneId(doctorId);
+	}
+	
 	/* 의사 한명 조회 : Optional Entity */
 	public Optional<Doctor> findDoctorIdOptional(String doctorId) {
 		return doctorRepository.findById(doctorId);

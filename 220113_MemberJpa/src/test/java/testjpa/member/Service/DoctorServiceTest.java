@@ -99,4 +99,32 @@ public class DoctorServiceTest {
 //		MemberDto(id=5, name=member4, gender=null, age=0, email=null, roleType=null, diary=null, history=null), 
 //		MemberDto(id=6, name=member5, gender=null, age=0, email=null, roleType=null, diary=null, history=null)]
 	}
+	
+	@Test
+	@Rollback(false)
+	public void 의사등록() {
+		Doctor doctor = Doctor.builder()
+				.id("TESTdoctor")
+				.password("AAaa123!")
+				.phoneNumber("010-1234-5678")
+				.buisnessNumber("123-12-12345")
+				.build();
+		
+		String doctorId = doctorService.join(doctor);
+		List<DoctorDto> joinDoctor = doctorService.findDoctorDto(doctorId);
+		System.out.println("joinDoctor = " + joinDoctor);
+		
+//		joinDoctor = [DoctorDto(id=TESTdoctor, password=AAaa123!, phoneNumber=010-1234-5678, buisnessNumber=123-12-12345)]
+	}
+	
+	@Test
+	@Rollback(false)
+	public void 의사수정() {
+		Doctor findDoctor = doctorService.findDoctorOneId("doctor3");
+		findDoctor.changeDoctor("Abc1234!", "010-4560-7890");
+		List<DoctorDto> updateDoctor = doctorService.findDoctorDto(findDoctor.getId());
+		System.out.println("updateDoctor = " + updateDoctor);
+		
+//		updateDoctor = [DoctorDto(id=doctor3, password=Abc1234!, phoneNumber=010-4560-7890, buisnessNumber=null)]
+	}
 }

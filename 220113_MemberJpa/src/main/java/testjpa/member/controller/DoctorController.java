@@ -53,13 +53,10 @@ public class DoctorController {
 		return doctorService.findDoctorDto(doctorId);
 	}
 	
+	/* 개발중 */
 	@PutMapping("/api/doctor/{id}")
 	public DoctorDto updateDoctor(@PathVariable("id") String doctorId,
 										@RequestBody @Valid DoctorDto dto){
-		
-		doctorService.update(doctorId, dto.getPassword(), dto.getPhoneNumber()); //NotBlank Valid로 인해 에러 발생
-		Doctor updateDoctor = doctorService.findDoctorOne(doctorId);
-		
-		return new DoctorDto(updateDoctor);
+		return null;
 	}
 }
