@@ -120,11 +120,22 @@ public class DoctorServiceTest {
 	@Test
 	@Rollback(false)
 	public void 의사수정() {
-		Doctor findDoctor = doctorService.findDoctorOneId("doctor3");
-		findDoctor.changeDoctor(findDoctor.getId(), "Abc1234!", "010-4560-7890");
-		List<DoctorDto> updateDoctor = doctorService.findDoctorDto(findDoctor.getId());
-		System.out.println("updateDoctor = " + updateDoctor);
+
+		/* Doctor : .changeDoctor() */
+		Doctor findDoctor3 = doctorService.findDoctorOneId("doctor3");
+		findDoctor3.changeDoctor("Abc1234!", "010-4560-7890");
+		List<DoctorDto> updateDoctor3 = doctorService.findDoctorDto(findDoctor3.getId());
+		System.out.println("updateDoctor3 = " + updateDoctor3);
 		
-//		updateDoctor = [DoctorDto(id=doctor3, password=Abc1234!, phoneNumber=010-4560-7890, buisnessNumber=null)]
+//		updateDoctor3 = [DoctorDto(id=doctor3, password=Abc1234!, phoneNumber=010-4560-7890, buisnessNumber=null)]
+		
+		/* Service : .update() */
+		Doctor findDoctor2 = doctorService.findDoctorOneId("doctor2");
+		doctorService.update(findDoctor2.getId(), "Ooo0000!", "010-7777-7777");
+		List<DoctorDto> updateDoctor2 = doctorService.findDoctorDto(findDoctor2.getId());
+		System.out.println("updateDoctor2 = " + updateDoctor2);
+		
+//		updateDoctor2 = [DoctorDto(id=doctor2, password=Ooo0000!, phoneNumber=010-7777-7777, buisnessNumber=null)]
+
 	}
 }
