@@ -70,7 +70,7 @@ public class DoctorController {
 	}
 	
 	/* Doctor 삭제 */
-	@DeleteMapping("api/doctor/{id}")
+	@DeleteMapping("/api/doctor/{id}")
 	public String deleteDoctor(@PathVariable("id") String doctorId) {
 		doctorService.delete(doctorId);
 		return "delete success";
