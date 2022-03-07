@@ -1,7 +1,6 @@
 package testjpa.member;
 
 import java.io.IOException;
-
 import okhttp3.*;
 
 public class HttpCaller {
@@ -10,10 +9,10 @@ public class HttpCaller {
 			.newBuilder()
 			.build();
 	
-	MediaType mediaType = MediaType.parse("application/json");
+	MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 	
 	@SuppressWarnings("deprecation")
-	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"b_no\": [\r\n    \"0000000000\"\r\n  ]\r\n}");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"b_no\": [\r\n    \"5298600830\"\r\n  ]\r\n}");
 	
 	String run(String url) throws IOException {
 		Request request = new Request.Builder()
