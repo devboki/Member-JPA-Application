@@ -71,8 +71,8 @@ public class DoctorService {
 	}
 	
 	/* 환자 조회 : fetch join + Dto */
-	public List<MemberDto> findMemberDto(String doctorId){
-		return doctorRepository.findMemberDto(doctorId);
+	public List<MemberDto> findMemberDto(String doctorId, String password){
+		return doctorRepository.findMemberDto(doctorId, password);
 	}
 	
 	/* 환자 조회 : paging + Dto */

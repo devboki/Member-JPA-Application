@@ -17,13 +17,13 @@ public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	
 	boolean existsById(String id);
 
-	@Query(value = "select new testjpa.member.domain.DoctorDto(d.id, d.password, d.phoneNumber, d.buisnessNumber) from Doctor d where d.id = :id")
+	@Query(value = "select new com.doctor.domain.DoctorDto(d.id, d.password, d.phoneNumber, d.buisnessNumber) from Doctor d where d.id = :id")
 	List<DoctorDto> findDoctorDto(@Param("id") String doctorId);
 	
-	@Query(value = "select new testjpa.member.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
-	List<MemberDto> findMemberDto(@Param("id") String doctorId);
+	@Query(value = "select new com.doctor.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id and d.password = :password")
+	List<MemberDto> findMemberDto(@Param("id") String doctorId, @Param("password") String password);
 
-	@Query(value = "select new testjpa.member.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
+	@Query(value = "select new com.doctor.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
 	Page<MemberDto> findAllMember(@Param("id") String doctorId, Pageable pageable);
 	
 	@Query("select d from Doctor d")

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.doctor.Service.DoctorService;
+import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,8 @@ public class DoctorViewController {
 	}
 	
 	/* 회원 가입 폼 */
-	@GetMapping("/doctor/join")
-	public String joinForm(Model model) {
-		new DoctorDto();
-		model.addAttribute("joinForm", DoctorDto.DoctorDtoBuilder().build());
+	@GetMapping("/doctor/new")
+	public String joinForm() {
 		return "doctors/joinForm";
 	}
 	
@@ -37,5 +36,17 @@ public class DoctorViewController {
 	@GetMapping("/doctor/search")
 	public String searchForm() {
 		return "doctors/searchForm";
+	}
+	
+	/* 환자 조회 폼 */
+	@GetMapping("/doctor/findMember")
+	public String findMemberForm() {
+		return "doctors/findMemberForm";
+	}
+	
+	/* 사업자등록 상태조회 폼 */
+	@GetMapping("/checkForm")
+	public String bNoCheckForm() {
+		return "doctors/checkForm";
 	}
 }
