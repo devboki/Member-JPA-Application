@@ -1,4 +1,4 @@
-package com.doctor.Service;
+package com.doctor.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

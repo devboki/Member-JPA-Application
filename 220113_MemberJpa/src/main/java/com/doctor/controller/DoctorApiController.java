@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doctor.Service.BuisnessService;
-import com.doctor.Service.DoctorService;
 import com.doctor.domain.Bno;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
@@ -22,6 +20,8 @@ import com.doctor.domain.MemberDto;
 import com.doctor.domain.RequestDoctorDto;
 import com.doctor.domain.ResponseDoctorDto;
 import com.doctor.domain.ResultDto;
+import com.doctor.service.BuisnessService;
+import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
 

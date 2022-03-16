@@ -3,26 +3,16 @@ package com.doctor.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-
-import com.doctor.domain.Member.MemberBuilder;
+import org.springframework.data.domain.Persistable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
@@ -39,7 +29,7 @@ import lombok.ToString;
 @ToString(of = {"id", "password", "phoneNumber", "buisnessNumber"})
 @DynamicUpdate
 @DynamicInsert
-public class Doctor extends BaseTimeEntity {
+public class Doctor extends BaseTimeEntity implements Persistable<String> {
 
 	@Id
 	@Column(name = "doctor_id")
@@ -67,5 +57,15 @@ public class Doctor extends BaseTimeEntity {
 	public void changeDoctor(String password, String phoneNumber) {
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+	}
+	
+	@Override 
+	public String getId() { 
+		return id; 
+	}
+	
+	@Override 
+	public boolean isNew() { 
+		return getCreatedDate() == null;
 	}
 }

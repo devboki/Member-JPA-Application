@@ -13,14 +13,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.doctor.Service.DiaryService;
-import com.doctor.Service.DoctorService;
-import com.doctor.Service.HistoryService;
-import com.doctor.Service.MemberService;
 import com.doctor.domain.Diary;
 import com.doctor.domain.Gender;
 import com.doctor.domain.History;
 import com.doctor.domain.Member;
+import com.doctor.service.DiaryService;
+import com.doctor.service.DoctorService;
+import com.doctor.service.HistoryService;
+import com.doctor.service.MemberService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

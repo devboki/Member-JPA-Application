@@ -1,10 +1,12 @@
 package com.doctor.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doctor.Service.BuisnessService;
-import com.doctor.Service.DoctorService;
 import com.doctor.domain.Bno;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
@@ -24,6 +24,8 @@ import com.doctor.domain.MemberDto;
 import com.doctor.domain.RequestDoctorDto;
 import com.doctor.domain.ResponseDoctorDto;
 import com.doctor.domain.ResultDto;
+import com.doctor.service.BuisnessService;
+import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,25 +47,6 @@ public class DoctorController {
 	public List<MemberDto> findMemberDto(@RequestParam("id") String doctorId,
 										@RequestParam("password") String password){
 		return doctorService.findMemberDto(doctorId, password);
-	}
-	
-	/* Doctor 등록 후 DoctorDto 조회 */
-	@PostMapping("/joinDoctor"
-			+ ""
-			+ "")
-	public List<DoctorDto> createDoctor(@Valid DoctorDto dto, Model model) {
-		
-		Doctor doctor = Doctor.builder()
-				.id(dto.getId())
-				.password(dto.getPassword())
-				.phoneNumber(dto.getPhoneNumber())
-				.buisnessNumber(dto.getBuisnessNumber())
-				.build();
-		
-		String doctorId = doctorService.join(doctor);
-		
-		model.addAttribute("joinForm", doctor);
-		return doctorService.findDoctorDto(doctorId);
 	}
 	
 	/* RequestDoctorDto 요청 받아 Doctor update 후 ResponseDoctorDto 리턴 */

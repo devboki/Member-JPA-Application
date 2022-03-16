@@ -1,4 +1,4 @@
-package com.doctor.Service;
+package com.doctor.service;
 
 import java.io.IOException;
 

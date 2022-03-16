@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doctor.Service.MemberService;
 import com.doctor.domain.Member;
 import com.doctor.domain.MemberDto;
+import com.doctor.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
