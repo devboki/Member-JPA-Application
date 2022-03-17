@@ -42,9 +42,6 @@ public class Doctor extends BaseTimeEntity implements Persistable<String> {
 	
 	private String buisnessNumber;
 	
-	@Transient
-	private boolean check;
-	
 	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
 	@BatchSize(size = 100)
 	@JsonIgnore

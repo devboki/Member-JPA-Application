@@ -19,13 +19,12 @@
 	  </thead>
 	  <tbody>
 	  <tr th:each="doctor : ${doctors}">
-	    <td><input type="checkbox" name="checkId" value="doctor2"></td>	 
-	    <td th:text="${doctor.id}"></td>
+	    <td><input type="checkbox" name="checkId" th:value="${doctor.id}"></td>
+	    <td th:text="${doctor.id}"><input type="hidden" name="checkId" value="${doctor.id}"></td>
 	    <td th:text="${doctor.password}"></td>
 	    <td th:text="${doctor.phoneNumber}"></td>
 	    <td th:text="${doctor.buisnessNumber}"></td>
-	  </tr>
-	  
+	  </tr>​
 	  </tbody>
 	</table><br>
 	<button type="submit">삭제하기</button>
