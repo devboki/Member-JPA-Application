@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
@@ -40,6 +41,9 @@ public class Doctor extends BaseTimeEntity implements Persistable<String> {
 	private String phoneNumber;
 	
 	private String buisnessNumber;
+	
+	@Transient
+	private boolean check;
 	
 	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
 	@BatchSize(size = 100)

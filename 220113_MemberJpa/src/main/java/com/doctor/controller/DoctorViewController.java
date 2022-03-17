@@ -7,16 +7,16 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.doctor.domain.CheckBox;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.DoctorForm;
 import com.doctor.service.DoctorService;
 
-import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -31,6 +31,23 @@ public class DoctorViewController {
 		List<DoctorDto> doctors = doctorService.findAllDoctorDto();
 		model.addAttribute("doctors", doctors);
 		return "doctors/doctorList";
+	}
+	
+	/* 의사 삭제 체크 */
+	@GetMapping("/doctor/delete")
+	public String checking(Model model) {
+		model.addAttribute("checkBox", new CheckBox());
+		return "doctors/doctorList";
+	}
+	
+	/* 의사 삭제 */
+	@PostMapping("/doctor/delete")
+	public String delete(CheckBox box) {
+		if(box.equals(null)) {
+			return "redirect:/";
+		}
+		doctorService.delete(box.getCheckId());
+		return "redirect:/";
 	}
 	
 	/* 회원 가입 폼 */
@@ -56,8 +73,7 @@ public class DoctorViewController {
 					.buisnessNumber(form.getBuisnessNumber())
 					.build();
 			doctorService.checkDoctorIdDuplication(doctor);
-			String doctorId = doctorService.join(doctor);
-			
+			doctorService.join(doctor);
 		} catch (IllegalStateException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "doctors/joinForm";
