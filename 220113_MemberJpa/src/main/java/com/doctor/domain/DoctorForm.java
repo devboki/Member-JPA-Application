@@ -3,19 +3,12 @@ package com.doctor.domain;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Getter
-@Builder(builderMethodName = "DoctorDtoBuilder")
-public class DoctorDto {
-
+@Getter @Setter
+public class DoctorForm {
+	
 	@NotBlank(message = "아이디를 입력해주세요.")
 	private String id;
 	
@@ -29,15 +22,4 @@ public class DoctorDto {
 	
 	@NotBlank(message = "사업자번호를 입력해주세요.")
 	private String buisnessNumber;
-	
-	public static DoctorDto fromEntity(Doctor doctor) {
-		return DoctorDtoBuilder()
-				.id(doctor.getId())
-				.password(doctor.getPassword())
-				.phoneNumber(doctor.getPhoneNumber())
-				.buisnessNumber(doctor.getBuisnessNumber())
-				.build();
-	}
-
-	public DoctorDto(Doctor doctor) { }
 }

@@ -4,18 +4,19 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
+import com.doctor.domain.DoctorForm;
 import com.doctor.service.DoctorService;
 
+import ch.qos.logback.classic.Logger;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -35,24 +36,34 @@ public class DoctorViewController {
 	/* 회원 가입 폼 */
 	@GetMapping("/doctor/new")
 	public String joinForm(Model model) {
-		model.addAttribute("newDoctorDto", new DoctorDto());
+		model.addAttribute("doctorForm", new DoctorForm());
 		return "doctors/joinForm";
 	}
 	
 	/* 회원 가입 */
 	@PostMapping("/doctor/new")
-	public String joinDoctor(@ModelAttribute("newDoctorDto") @Valid DoctorDto dto, BindingResult result) {
+	public String joinDoctor(@Valid DoctorForm form, BindingResult result, Model model) {
 		
-//		if(result.hasErrors()) {
-//			return "doctors/joinForm";
-//		}
+		if(result.hasErrors()) {
+			return "doctors/joinForm";
+		}
 		
-		Doctor doctor = new Doctor(
-				dto.getId(), dto.getPassword(), dto.getPhoneNumber(), dto.getBuisnessNumber());
+		try {
+			Doctor doctor = Doctor.builder()
+					.id(form.getId())
+					.password(form.getPassword())
+					.phoneNumber(form.getPhoneNumber())
+					.buisnessNumber(form.getBuisnessNumber())
+					.build();
+			doctorService.checkDoctorIdDuplication(doctor);
+			String doctorId = doctorService.join(doctor);
+			
+		} catch (IllegalStateException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "doctors/joinForm";
+		}
 		
-		String doctorId = doctorService.join(doctor);
-		List<DoctorDto> doctorDto = doctorService.findDoctorDto(doctorId);
-		return "doctors/joinResult";
+		return "redirect:/";
 	}
 	
 	/* 의사 조회 폼 */

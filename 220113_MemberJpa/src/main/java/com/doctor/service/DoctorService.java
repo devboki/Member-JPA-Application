@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.MemberDto;
-import com.doctor.domain.RequestDoctorDto;
 import com.doctor.repository.DoctorRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +27,7 @@ public class DoctorService {
 	/* 가입 */
 	@Transactional
 	public String join(Doctor doctor) { 
+		checkDoctorIdDuplication(doctor);
 		doctorRepository.save(doctor);
 		return doctor.getId();
 	}
