@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.MemberDto;
+import com.doctor.domain.ResultFindMember;
 
 public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	
@@ -20,9 +21,12 @@ public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	@Query(value = "select new com.doctor.domain.DoctorDto(d.id, d.password, d.phoneNumber, d.buisnessNumber) from Doctor d where d.id = :id")
 	List<DoctorDto> findDoctorDto(@Param("id") String doctorId);
 	
-	@Query(value = "select new com.doctor.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id and d.password = :password")
+	@Query(value = "select new com.doctor.domain.MemberDto(m.name, m.gender, m.age) from Doctor d join d.members m where d.id = :id and d.password = :password")
 	List<MemberDto> findMemberDto(@Param("id") String doctorId, @Param("password") String password);
 
+	@Query(value = "select new com.doctor.domain.ResultFindMember(m.name, m.gender, m.age) from Doctor d join d.members m where d.id = :id and d.password = :password")
+	List<ResultFindMember> findMemberResult(@Param("id") String doctorId, @Param("password") String password);
+	
 	@Query(value = "select new com.doctor.domain.MemberDto(m.id, m.name) from Doctor d join d.members m where d.id = :id")
 	Page<MemberDto> findAllMember(@Param("id") String doctorId, Pageable pageable);
 	
@@ -32,4 +36,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, String>{
 	@Query("select d from Doctor d where d.id = :id")
 	Doctor findDoctorOneId(@Param("id") String doctorId);
 
+	@Query("select d from Doctor d where d.id = :id and d.password = :password")
+	Doctor findDoctorIdPw(String doctorId, String password);
 }

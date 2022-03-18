@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.MemberDto;
+import com.doctor.domain.ResultFindMember;
 import com.doctor.repository.DoctorRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,11 @@ public class DoctorService {
 		return doctorRepository.findDoctorOne(doctorId);
 	}
 	
+	/* 의사 ID, PW로 조회 : Entity */
+	public Doctor findDoctorIdPw(String doctorId, String password) {
+		return doctorRepository.findDoctorIdPw(doctorId, password);
+	}
+	
 	/* 의사 한명 조회 : Entity + Id*/
 	public Doctor findDoctorOneId(String doctorId) {
 		return doctorRepository.findDoctorOneId(doctorId);
@@ -73,6 +79,11 @@ public class DoctorService {
 	/* 환자 조회 : fetch join + Dto */
 	public List<MemberDto> findMemberDto(String doctorId, String password){
 		return doctorRepository.findMemberDto(doctorId, password);
+	}
+	
+	/* 환자 조회 : fetch join + Result */
+	public List<ResultFindMember> findMemberResult(String doctorId, String password) {
+		return doctorRepository.findMemberResult(doctorId, password);
 	}
 	
 	/* 환자 조회 : paging + Dto */

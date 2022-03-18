@@ -39,6 +39,12 @@ public class MemberDto {
 		this.name = name;
 	}
 	
+	public MemberDto(String name, Gender gender, int age) {
+		this.name = name;
+		this.gender = gender;
+		this.age = age;
+	}
+	
 	public MemberDto(History history) {
 		this.history = history;
 	}

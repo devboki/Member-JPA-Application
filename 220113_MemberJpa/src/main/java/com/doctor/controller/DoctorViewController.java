@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -15,6 +17,9 @@ import com.doctor.domain.CheckBox;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.DoctorForm;
+import com.doctor.domain.MemberDto;
+import com.doctor.domain.MemberSearchForm;
+import com.doctor.domain.ResultFindMember;
 import com.doctor.domain.SearchForm;
 import com.doctor.service.DoctorService;
 
@@ -107,8 +112,24 @@ public class DoctorViewController {
 	
 	/* 환자 조회 폼 */
 	@GetMapping("/doctor/findMember")
-	public String findMemberForm() {
+	public String findMemberForm(Model model) {
+		model.addAttribute("memberSearchForm", new MemberSearchForm());
 		return "doctors/findMemberForm";
+	}
+	
+	/* 환자 조회 */
+	@PostMapping("/doctor/findMember")
+	public String searchMember(MemberSearchForm form, ResultFindMember result, Model model) {
+
+		List<ResultFindMember> members = doctorService.findMemberResult(form.getId(), form.getPassword());
+		
+		if(members.isEmpty()) {
+			model.addAttribute("errorMessage", "매칭된 환자 정보가 없습니다.");
+			return "doctors/findMemberForm";
+		}
+		model.addAttribute("members", members);
+
+		return "doctors/memberInfo";
 	}
 	
 	/* 사업자등록 상태조회 폼 */
