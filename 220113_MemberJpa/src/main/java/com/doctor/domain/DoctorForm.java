@@ -3,10 +3,14 @@ package com.doctor.domain;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DoctorForm {
 	
 	@NotBlank(message = "아이디를 입력해주세요.")
@@ -22,4 +26,9 @@ public class DoctorForm {
 	
 	@NotBlank(message = "사업자번호를 입력해주세요.")
 	private String buisnessNumber;
+	
+	public DoctorForm(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
 }

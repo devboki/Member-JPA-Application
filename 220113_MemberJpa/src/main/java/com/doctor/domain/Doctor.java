@@ -42,7 +42,7 @@ public class Doctor extends BaseTimeEntity implements Persistable<String> {
 	
 	private String buisnessNumber;
 	
-	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, orphanRemoval = true)
 	@BatchSize(size = 100)
 	@JsonIgnore
 	private List<Member> members = new ArrayList<>();

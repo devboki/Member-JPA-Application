@@ -2,22 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8">
 <head>
-<title>Doctor LIST</title>
+<title>Doctor Info</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<script> 
-function btn(){ 
-	alert('회원 정보가 삭제되었습니다'); 
-	} 
-</script>
 </head>
 <body>
 <div class="col-md-6">
-<h1>의사 목록</h1>
-<form th:action="@{/doctor/delete}" method="post">
+<h1>의사 정보</h1>
+<form th:action="@{/doctor/search}" method="post">
 	<table width="600">
 	  <thead>
-	  <tr>
-	    <th>선택</th>	  
+	  <tr>	  
 	    <th>아이디</th>
 	    <th>비밀번호</th>
 	    <th>핸드폰번호</th>
@@ -25,16 +19,14 @@ function btn(){
 	  </tr>
 	  </thead>
 	  <tbody>
-	  <tr th:each="doctor : ${doctors}">
-	    <td><input type="checkbox" name="checked" th:value="${doctor.id}"></td>
-	    <td th:text="${doctor.id}"><input type="hidden" name="checked" value="${doctor.id}"></td>
+	  <tr th:each="doctor : ${doctorInfo}">
+	    <td th:text="${doctor.id}"></td>
 	    <td th:text="${doctor.password}"></td>
 	    <td th:text="${doctor.phoneNumber}"></td>
 	    <td th:text="${doctor.buisnessNumber}"></td>
 	  </tr>​
 	</tbody>
 	</table><br>
-	<button onclick="javascript:btn()" type="submit">삭제하기</button><br><br>
 </form>
 
 	<a href="/">돌아가기</a>

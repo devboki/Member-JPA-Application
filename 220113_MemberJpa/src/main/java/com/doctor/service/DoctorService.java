@@ -93,5 +93,10 @@ public class DoctorService {
 		doctorRepository.deleteById(doctorId);
 	}
 
+	/* 탈퇴 : 멀티체크박스 */
+	@Transactional
+	public void deleteList(List<String> doctorId) {
+		doctorRepository.deleteAllById(doctorId);
+	}
 	
 }

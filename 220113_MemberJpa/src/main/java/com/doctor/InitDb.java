@@ -60,22 +60,44 @@ public class InitDb {
 			
 			Doctor doctor1 = Doctor.builder()
 					.id("doctor1")
-					.password("abcd")
-					.phoneNumber("000-0000-0000")
-					.buisnessNumber("123-45-12345")
+					.password("Aaaa1234!")
+					.phoneNumber("010-0000-0000")
+					.buisnessNumber("5298600830")
 					.build();
 			
 			Doctor doctor2 = Doctor.builder()
 					.id("doctor2")
+					.password("Aaaa1234!")
+					.phoneNumber("010-0000-0000")
+					.buisnessNumber("5298600830")
 					.build();
 			
 			Doctor doctor3 = Doctor.builder()
 					.id("doctor3")
+					.password("Aaaa1234!")
+					.phoneNumber("010-0000-0000")
+					.buisnessNumber("5298600830")
+					.build();
+			
+			Doctor doctor4 = Doctor.builder()
+					.id("doctor4")
+					.password("Aaaa1234!")
+					.phoneNumber("010-0000-0000")
+					.buisnessNumber("5298600830")
+					.build();
+			
+			Doctor doctor5 = Doctor.builder()
+					.id("doctor5")
+					.password("Aaaa1234!")
+					.phoneNumber("010-0000-0000")
+					.buisnessNumber("5298600830")
 					.build();
 			
 			em.persist(doctor1);
 			em.persist(doctor2);
 			em.persist(doctor3);
+			em.persist(doctor4);
+			em.persist(doctor5);
 			
 			Member admin = Member.MemberBuilder()
 					.name("admin")

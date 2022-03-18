@@ -9,11 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.doctor.domain.CheckBox;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.DoctorForm;
+import com.doctor.domain.SearchForm;
 import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,7 @@ public class DoctorViewController {
 		if(box.equals(null)) {
 			return "redirect:/";
 		}
-		doctorService.delete(box.getCheckId());
+		doctorService.deleteList(box.getChecked());
 		return "redirect:/";
 	}
 	
@@ -83,8 +85,24 @@ public class DoctorViewController {
 	
 	/* 의사 조회 폼 */
 	@GetMapping("/doctor/search")
-	public String searchForm() {
+	public String searchForm(Model model) {
+		model.addAttribute("searchForm", new SearchForm());
 		return "doctors/searchForm";
+	}
+	
+	/* 의사 조회 */
+	@PostMapping("/doctor/search")
+	public String searchDoctor(SearchForm form, DoctorDto dto, Model model) {
+
+		List<DoctorDto> doctorInfo = doctorService.findDoctorDto(form.getId());
+			
+		if(doctorInfo.isEmpty()) {
+			model.addAttribute("errorMessage", "입력한 ID의 의사 정보가 없습니다.");
+			return "doctors/searchForm";
+		}
+		model.addAttribute("doctorInfo", doctorInfo);
+
+		return "doctors/doctorInfo";
 	}
 	
 	/* 환자 조회 폼 */
