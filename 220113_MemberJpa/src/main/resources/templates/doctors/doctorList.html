@@ -19,7 +19,6 @@ function btn(){
 	  <tr>
 	    <th>선택</th>	  
 	    <th>아이디</th>
-	    <th>비밀번호</th>
 	    <th>핸드폰번호</th>
 	    <th>사업자번호</th>
 	  </tr>
@@ -28,7 +27,6 @@ function btn(){
 	  <tr th:each="doctor : ${doctors}">
 	    <td><input type="checkbox" name="checked" th:value="${doctor.id}"></td>
 	    <td th:text="${doctor.id}"><input type="hidden" name="checked" value="${doctor.id}"></td>
-	    <td th:text="${doctor.password}"></td>
 	    <td th:text="${doctor.phoneNumber}"></td>
 	    <td th:text="${doctor.buisnessNumber}"></td>
 	  </tr>​

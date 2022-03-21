@@ -1,5 +1,6 @@
 package com.doctor.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -13,14 +14,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.doctor.domain.Bno;
 import com.doctor.domain.CheckBox;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.DoctorForm;
+import com.doctor.domain.Gender;
 import com.doctor.domain.MemberDto;
 import com.doctor.domain.MemberSearchForm;
+import com.doctor.domain.ResultDto;
 import com.doctor.domain.ResultFindMember;
 import com.doctor.domain.SearchForm;
+import com.doctor.service.BuisnessService;
 import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class DoctorViewController {
 
 	private final DoctorService doctorService;
+	private final BuisnessService buisnessService;
 	
 	/* 의사 전체 조회 */
 	@GetMapping("/doctor/list")
@@ -39,7 +45,7 @@ public class DoctorViewController {
 		return "doctors/doctorList";
 	}
 	
-	/* 의사 삭제 체크 */
+	/* 의사 삭제 멀티 체크 */
 	@GetMapping("/doctor/delete")
 	public String checking(Model model) {
 		model.addAttribute("checkBox", new CheckBox());
@@ -128,13 +134,40 @@ public class DoctorViewController {
 			return "doctors/findMemberForm";
 		}
 		model.addAttribute("members", members);
+		model.addAttribute("gender", Gender.values());
 
 		return "doctors/memberInfo";
 	}
 	
 	/* 사업자등록 상태조회 폼 */
-	@GetMapping("/checkForm")
-	public String bNoCheckForm() {
+	@GetMapping("/doctor/checkForm")
+	public String bNoCheckForm(Model model) {
+		model.addAttribute("bNo", new Bno());
 		return "doctors/checkForm";
+	}
+	
+	/* 사업자등록 상태조회 */
+	@PostMapping("/doctor/checkForm")
+	public String checkbNo(@ModelAttribute("bNo") @Valid Bno bNo, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return "doctors/checkForm";
+		}
+		
+		try {
+			ResultDto rDto = buisnessService.check(bNo);
+			
+			String bNoError = "국세청에 등록되지 않은 사업자등록번호입니다.";
+			if(rDto.getTaxType().equals(bNoError)) {
+				model.addAttribute("bNoError", bNoError);
+				return "doctors/checkForm";
+			}
+			model.addAttribute("rDto", rDto);
+
+		} catch (IOException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "doctors/checkForm";
+		}
+		return "doctors/buisnessInfo";
 	}
 }

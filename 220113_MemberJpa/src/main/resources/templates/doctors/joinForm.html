@@ -9,15 +9,10 @@
         color: red;
         }
 </style>
-<script> 
-function btn(){ 
-	alert('회원가입이 되었습니다'); 
-	} 
-</script>
 </head>
 <body>
 <div class="col-md-6">
-	<h1>회원 가입</h1>
+	<h1>회원 가입</h1><br>
 	<form th:action="@{/doctor/new}" th:object="${doctorForm}" method="post">
 		아이디 <input type="text" id="id" th:field="*{id}" placeholder="아이디를 입력하세요">
 			 <span class="error" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
@@ -29,7 +24,7 @@ function btn(){
 		사업자번호 <input type="text" id="buisnessNumber" th:field="*{buisnessNumber}" placeholder="사업자번호를 입력하세요">
 				<span class="error" th:if="${#fields.hasErrors('buisnessNumber')}" th:errors="*{buisnessNumber}"></span><br><br>
 		
-		<button onclick="javascript:btn()" type="submit">가입하기</button> <button type="reset">취소</button>
+		<button type="submit">가입하기</button> <button type="reset">취소</button>
 	</form><br>
 	
 	<a href="/">돌아가기</a>

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<body>
+<div class="col-md-6">
+<form th:action="@{/doctor/check}" method="post">
+<h1>사업자등록 상태조회</h1><br>
+<b>사업자번호</b> : <span th:text="${rDto.bNo}"></span><br>
+<b>조회결과</b> : <span th:text="${rDto.taxType}"></span><br><br>
+
+	<a href="/">돌아가기</a>
+</form>
+</div>
+</body>
+</html>

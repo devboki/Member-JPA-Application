@@ -184,9 +184,14 @@ public class DoctorServiceTest {
 	
 	@Test
 	public void openApiDto() throws IOException {
-		Bno bno = new Bno();
-		bno.setBNo("5298600830");
-		ResultDto dto = buisnessService.check(bno);
-		System.out.println(dto);
+
+		Bno bnoNO = new Bno();
+		bnoNO.setBNo("000000000011");
+		
+		ResultDto dtoNO = buisnessService.check(bnoNO);
+		String error = "국세청에 등록되지 않은 사업자등록번호입니다.";
+		if(dtoNO.getTaxType().equals(error)) {
+			System.out.println("사업자 번호를 확인해주세요.");
+		}
 	}
 }

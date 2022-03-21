@@ -20,7 +20,8 @@
 	  <tbody>
 	  <tr th:each="member : ${members}">
 	    <td th:text="${member.name}"></td>
-	    <td th:text="${member.gender}"></td>
+	    <td><span th:each="gender : #{T(com.doctor.domain.Gender).Gender}" 
+	    		th:value="${member.gender}" th:text="${member.gender.description}"></span></td>
 	    <td th:text="${member.age}"></td>
 	  </tr>​
 	</tbody>

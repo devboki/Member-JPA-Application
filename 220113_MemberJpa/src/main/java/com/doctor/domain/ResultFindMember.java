@@ -12,12 +12,4 @@ public class ResultFindMember {
 	private String name;
 	private Gender gender;
 	private int age;
-	private Diary diary;
-	private History history;
-	
-	public ResultFindMember(String name, Gender gender, int age) {
-		this.name = name;
-		this.gender = gender;
-		this.age = age;
-	}
 }
