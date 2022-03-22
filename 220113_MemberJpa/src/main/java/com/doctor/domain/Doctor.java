@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.domain.Persistable;
@@ -41,6 +43,11 @@ public class Doctor extends BaseTimeEntity implements Persistable<String> {
 	private String phoneNumber;
 	
 	private String buisnessNumber;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length = 10)
+	@ColumnDefault("'DOCTOR'")
+	private RoleType roleType;
 	
 	@OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, orphanRemoval = true)
 	@BatchSize(size = 100)
