@@ -1,6 +1,7 @@
 package com.doctor.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +33,8 @@ import com.doctor.service.BuisnessService;
 import com.doctor.service.DoctorService;
 import com.doctor.service.MemberService;
 
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -193,5 +196,27 @@ public class DoctorServiceTest {
 		if(dtoNO.getTaxType().equals(error)) {
 			System.out.println("사업자 번호를 확인해주세요.");
 		}
+	}
+	
+	@Test
+	public void sendSms() {
+		String api_key = "NCSUABB5JPDXCCE8";
+        String api_secret = "3EWZMGR1KROFDELHRGF2CYGWQ5LZNVYV";
+        Message coolsms = new Message(api_key, api_secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        params.put("to", "01031338916");
+        params.put("from", "01031338916");
+        params.put("type", "SMS");
+        params.put("text", "문자 내용");
+        params.put("app_version", "test app 1.2");
+
+        try {
+            org.json.simple.JSONObject obj = coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
 	}
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.doctor.domain.Bno;
@@ -24,6 +26,7 @@ import com.doctor.service.BuisnessService;
 import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @RestController
 @RequiredArgsConstructor
@@ -89,4 +92,11 @@ public class DoctorApiController {
 		ResultDto resultDto = buisnessService.check(bNo);
 		return resultDto;
 	}
+	
+	/* 휴대폰 문자 인증 */
+	@GetMapping("/check/sendSMS")
+	public @ResponseBody String sendSMS(@RequestParam(value="to") String to) throws CoolsmsException {
+		return buisnessService.phoneNumberCheck(to);
+	}
+	//http://localhost:8088/check/sendSMS?to=01031338916
 }

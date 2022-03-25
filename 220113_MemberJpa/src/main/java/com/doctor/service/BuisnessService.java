@@ -1,6 +1,8 @@
 package com.doctor.service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +12,8 @@ import org.springframework.stereotype.Service;
 import com.doctor.domain.Bno;
 import com.doctor.domain.ResultDto;
 
-import lombok.RequiredArgsConstructor;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,9 +21,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @Service
-@RequiredArgsConstructor
 public class BuisnessService {
 
+	/* 사업자 번호 인증 */
+	@SuppressWarnings("unused")
 	public ResultDto check(Bno bNo) throws IOException {
 		
 		OkHttpClient client = new OkHttpClient()
@@ -63,4 +67,30 @@ public class BuisnessService {
 		}
 		return new ResultDto();
 	}
+
+	/* 휴대폰 인증 */
+	public String phoneNumberCheck(String to) throws CoolsmsException {
+		
+		String api_key = "NCSUABB5JPDXCCE8";
+        String api_secret = "3EWZMGR1KROFDELHRGF2CYGWQ5LZNVYV";
+        Message coolsms = new Message(api_key, api_secret);
+        
+        Random rand = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+        	String ran = Integer.toString(rand.nextInt(10));
+        	numStr+=ran;
+        }
+        
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", to);
+        params.put("from", "01031338916");
+        params.put("type", "sms");
+        params.put("text", "인증번호는 [" + numStr + "] 입니다.");
+	
+        coolsms.send(params);
+        
+		return numStr;
+	}
+
 }
