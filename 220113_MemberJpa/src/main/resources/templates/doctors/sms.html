@@ -4,48 +4,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- <script type="text/javascript">
-$('#send').click(function() {
-	
-	const to = $('#to').val();
-	
-	$.ajax ({
-		url: '/check/sendSMS',
-		type: 'GET',
-		data: {
-			"to" : to
-		},
-		success: function(data) {
-			const checkNum = data;
-			alert('checkNum:'+ checkNum);
-			
-			$('#enterBtn').click(function() {	
-				const userNum = $('#userNum').val();
-				
-				if(checkNum === userNum) {
-					alert('인증 성공하였습니다.');
-				}
-				else {
-					alert('인증 실패하였습니다. 다시 입력해주세요.');
-				}
-			});
-			
-		}
-	});
-	
-});
-</script> -->
+<style>
+    .error {
+        color: red;
+        }
+</style>
 </head>
 <body>
+<div class="col-md-6">
 <h3>문자 인증</h3>
-	<div id="contents"> 
-		받는사람 : <input type="text" id="to" th:field="*{to}"/>   <!-- 인증번호 받을사람 휴대폰 번호 -->
-		<button type="button" id="send">전송</button><br> <!-- 문자보내는 전송버튼 -->
-		
-		인증번호 : <input type="text" id="userNum" th:field="*{userNum}">   <!-- 인증번호 입력창 -->
-		<button type="button" id="enterBtn">확인</button>  <!-- 인증번호와 내가 입력창에 입력한 인증번호 비교하는 창 -->		
-    </div>
+	<form th:action="@{/doctor/sms}" th:object="${pNo}" method="post">
+	휴대폰 번호 <input type="text" id="pNo" th:field="*{pNo}"/> 
+	<button type="submit">인증 번호 전송</button>
+	<span class="error" th:if="${#fields.hasErrors('pNo')}" th:errors="*{pNo}"></span>
+	<span class="error" th:text="${errorMessage}"></span><br>
+	</form>
+</div>
 </body>
-
-
 </html>

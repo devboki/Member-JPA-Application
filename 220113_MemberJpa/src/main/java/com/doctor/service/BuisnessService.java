@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.validation.Valid;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.doctor.domain.Bno;
+import com.doctor.domain.Pno;
 import com.doctor.domain.ResultDto;
 
 import net.nurigo.java_sdk.api.Message;
@@ -69,8 +72,7 @@ public class BuisnessService {
 	}
 
 	/* 휴대폰 인증 */
-	public String phoneNumberCheck(String to) throws CoolsmsException {
-		
+	public String phoneNumberCheck(Pno pNo) throws CoolsmsException {
 		String api_key = "NCSUABB5JPDXCCE8";
         String api_secret = "3EWZMGR1KROFDELHRGF2CYGWQ5LZNVYV";
         Message coolsms = new Message(api_key, api_secret);
@@ -83,10 +85,10 @@ public class BuisnessService {
         }
         
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("to", to);
+        params.put("to", pNo.getPNo());
         params.put("from", "01031338916");
         params.put("type", "sms");
-        params.put("text", "인증번호는 [" + numStr + "] 입니다.");
+        params.put("text", "인증 번호는 [" + numStr + "] 입니다.");
 	
         coolsms.send(params);
         

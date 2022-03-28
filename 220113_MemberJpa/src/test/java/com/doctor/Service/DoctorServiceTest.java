@@ -187,7 +187,6 @@ public class DoctorServiceTest {
 	
 	@Test
 	public void openApiDto() throws IOException {
-
 		Bno bnoNO = new Bno();
 		bnoNO.setBNo("000000000011");
 		
@@ -199,24 +198,8 @@ public class DoctorServiceTest {
 	}
 	
 	@Test
-	public void sendSms() {
-		String api_key = "NCSUABB5JPDXCCE8";
-        String api_secret = "3EWZMGR1KROFDELHRGF2CYGWQ5LZNVYV";
-        Message coolsms = new Message(api_key, api_secret);
-        HashMap<String, String> params = new HashMap<String, String>();
-
-        params.put("to", "01031338916");
-        params.put("from", "01031338916");
-        params.put("type", "SMS");
-        params.put("text", "문자 내용");
-        params.put("app_version", "test app 1.2");
-
-        try {
-            org.json.simple.JSONObject obj = coolsms.send(params);
-            System.out.println(obj.toString());
-        } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
-        }
+	public void testSMS() throws CoolsmsException {
+//		String to = "01031338916";
+//		String randomNumber = buisnessService.phoneNumberCheck(to);
 	}
 }

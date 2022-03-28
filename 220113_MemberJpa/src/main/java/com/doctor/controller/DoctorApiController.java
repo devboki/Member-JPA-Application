@@ -93,10 +93,10 @@ public class DoctorApiController {
 		return resultDto;
 	}
 	
-	/* 휴대폰 문자 인증 */
-	@GetMapping("/check/sendSMS")
-	public @ResponseBody String sendSMS(@RequestParam(value="to") String to) throws CoolsmsException {
-		return buisnessService.phoneNumberCheck(to);
-	}
-	//http://localhost:8088/check/sendSMS?to=01031338916
+//	/* 휴대폰 문자 인증 */
+//	@GetMapping("/check/sendSMS")
+//	public @ResponseBody String sendSMS(@RequestParam(value="to") String to) throws CoolsmsException {
+//		return buisnessService.phoneNumberCheck(to);
+//	}
+//	http://localhost:8088/check/sendSMS?to=01031338916
 }

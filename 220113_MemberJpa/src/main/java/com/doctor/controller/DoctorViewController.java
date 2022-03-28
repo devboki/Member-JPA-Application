@@ -22,6 +22,7 @@ import com.doctor.domain.DoctorForm;
 import com.doctor.domain.Gender;
 import com.doctor.domain.MemberDto;
 import com.doctor.domain.MemberSearchForm;
+import com.doctor.domain.Pno;
 import com.doctor.domain.ResultDto;
 import com.doctor.domain.ResultFindMember;
 import com.doctor.domain.SearchForm;
@@ -29,6 +30,7 @@ import com.doctor.service.BuisnessService;
 import com.doctor.service.DoctorService;
 
 import lombok.RequiredArgsConstructor;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Controller
 @RequiredArgsConstructor
@@ -153,15 +155,14 @@ public class DoctorViewController {
 		if(result.hasErrors()) {
 			return "doctors/checkForm";
 		}
-		
 		try {
 			ResultDto rDto = buisnessService.check(bNo);
 			
 			String bNoError = "국세청에 등록되지 않은 사업자등록번호입니다.";
-			if(rDto.getTaxType().equals(bNoError)) {
-				model.addAttribute("bNoError", bNoError);
-				return "doctors/checkForm";
-			}
+				if(rDto.getTaxType().equals(bNoError)) {
+					model.addAttribute("bNoError", bNoError);
+					return "doctors/checkForm";
+				}
 			model.addAttribute("rDto", rDto);
 
 		} catch (IOException e) {
@@ -169,5 +170,31 @@ public class DoctorViewController {
 			return "doctors/checkForm";
 		}
 		return "doctors/buisnessInfo";
+	}
+	
+	/* 휴대폰 문자인증 폼 */
+	@GetMapping("/doctor/sms")
+	public String sendSms(Model model) {
+		model.addAttribute("pNo", new Pno());
+		return "doctors/sms";
+	}
+	
+	/* 인증번호 확인 */
+	@PostMapping("/doctor/sms")
+	public String checkSms(@ModelAttribute("pNo") @Valid Pno pNo, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			return "doctors/sms";
+		}
+		try {
+			String numStr = buisnessService.phoneNumberCheck(pNo);
+			model.addAttribute("sendMessage", "인증 번호가 발송되었습니다.");
+			model.addAttribute("numStr", "인증 번호는 [" + numStr + "] 입니다.");
+		} catch (CoolsmsException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "doctors/sms";
+		}
+		
+		return "doctors/smsResult";
 	}
 }
