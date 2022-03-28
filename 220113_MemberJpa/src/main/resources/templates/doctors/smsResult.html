@@ -16,11 +16,6 @@
 	<form th:action="@{/doctor/smsResult}" th:object="${numStr}" method="post">
 	<span th:text="${sendMessage}"></span><span th:text="${errorMessage}"></span><br>
 	<span th:text="${numStr}"></span>
-	
-<!-- 	인증 번호 <input type="text" id="numStr" th:field="*{numStr}"/> 
-	<button type="submit">확인</button>
-	<span class="error" th:if="${#fields.hasErrors('numStr')}" th:errors="*{numStr}"></span>
-	<span class="error" th:text="${errorMessage}"></span><br> -->
 	</form>
 
 

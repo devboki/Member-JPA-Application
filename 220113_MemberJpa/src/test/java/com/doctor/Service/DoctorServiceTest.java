@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.doctor.domain.Doctor;
 import com.doctor.domain.DoctorDto;
 import com.doctor.domain.MemberDto;
+import com.doctor.domain.Pno;
 import com.doctor.domain.Bno;
 import com.doctor.domain.ResultDto;
 import com.doctor.domain.ResultFindMember;
@@ -201,5 +202,8 @@ public class DoctorServiceTest {
 	public void testSMS() throws CoolsmsException {
 //		String to = "01031338916";
 //		String randomNumber = buisnessService.phoneNumberCheck(to);
+		
+		Pno pNo = new Pno("01031338916");
+//		buisnessService.phoneNumberCheck(pNo);
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.doctor.domain.Bno;
 import com.doctor.domain.CheckBox;
@@ -179,22 +180,27 @@ public class DoctorViewController {
 		return "doctors/sms";
 	}
 	
-	/* 인증번호 확인 */
-	@PostMapping("/doctor/sms")
-	public String checkSms(@ModelAttribute("pNo") @Valid Pno pNo, BindingResult result, Model model) {
-		
-		if(result.hasErrors()) {
-			return "doctors/sms";
-		}
-		try {
-			String numStr = buisnessService.phoneNumberCheck(pNo);
-			model.addAttribute("sendMessage", "인증 번호가 발송되었습니다.");
-			model.addAttribute("numStr", "인증 번호는 [" + numStr + "] 입니다.");
-		} catch (CoolsmsException e) {
-			model.addAttribute("errorMessage", e.getMessage());
-			return "doctors/sms";
-		}
-		
-		return "doctors/smsResult";
+	/* 인증번호 검증 */
+	@GetMapping("/doctor/smsCheck")
+	public @ResponseBody String check(@RequestParam(value="pNo") String pNo) throws CoolsmsException {
+		return buisnessService.phoneNumberCheck(pNo);
 	}
+	
+	/* 인증번호 확인 */
+//	@PostMapping("/doctor/sms")
+//	public String checkSms(@ModelAttribute("pNo") @Valid Pno pNo, BindingResult result, Model model) {
+//		
+//		if(result.hasErrors()) {
+//			return "doctors/sms";
+//		}
+//		try {
+//			String numStr = buisnessService.phoneNumberCheck(pNo);
+//			model.addAttribute("sendMessage", "인증 번호가 발송되었습니다.");
+//			model.addAttribute("numStr", "인증 번호는 [" + numStr + "] 입니다.");
+//		} catch (CoolsmsException e) {
+//			model.addAttribute("errorMessage", e.getMessage());
+//			return "doctors/sms";
+//		}
+//		return "doctors/smsResult";
+//	}
 }
