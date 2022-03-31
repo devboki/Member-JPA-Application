@@ -7,9 +7,9 @@
 </head>
 <body>
 <div class="col-md-6">
-	<h1>의사 조회</h1>
+	<h3>의사 조회</h3>
 	<form th:action="@{/doctor/search}" th:object="${searchForm}" method="post">
-		ID <input type="text" id="id" th:field="*{id}" placeholder="아이디를 입력하세요">
+		아이디 <input type="text" id="id" th:field="*{id}" placeholder="아이디를 입력하세요">
 		<span th:text="${errorMessage}"></span><br><br>
 		<button type="submit">조회하기</button> <button type="reset">취소</button>
 	</form><br>

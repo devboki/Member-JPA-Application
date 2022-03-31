@@ -14,15 +14,24 @@
 <body>
 <div class="col-md-6">
 <h3>문자 인증</h3>
-	<form th:action="@{/doctor/sms}" th:object="${pNo}" method="post">
-	휴대폰 번호 <input type="text" id="pNo" th:field="*{pNo}"/> 
-	<button type="button" id="send">인증 번호 전송</button>
-	<span class="error" th:if="${#fields.hasErrors('pNo')}" th:errors="*{pNo}"></span>
-	<span class="error" th:text="${errorMessage}"></span><br>
-	</form>
-	
-	인증 번호 <input type="text" id="number"/>
-	<button type="button" id="enterBtn">인증 확인</button>
+<form th:action="@{/doctor/sms}" th:object="${pNo}" method="post">
+	<table width="380">
+	<tr>
+		<td width="90">휴대폰 번호</td>
+		<td><input type="text" id="pNo" th:field="*{pNo}"/></td> 
+		<td><button type="button" id="send">인증 번호 전송</button></td>
+		<!-- <span class="error" th:if="${#fields.hasErrors('pNo')}" th:errors="*{pNo}"></span>
+			 <span class="error" th:text="${errorMessage}"></span> -->
+	</tr>
+	<tr>
+		<td>인증 번호</td>
+		<td><input type="text" id="number"/></td>
+		<td><button type="button" id="enterBtn">인증 확인</button></td>
+	</tr>
+	</table><br>
+</form>
+
+	<a href="/">돌아가기</a>
 </div>
 </body>
 
@@ -51,6 +60,7 @@ $('#send').click(function() {
 					alert('인증 실패하였습니다. 다시 입력해주세요.');
 				}
 			});
+			
 			
 		}
 	});
