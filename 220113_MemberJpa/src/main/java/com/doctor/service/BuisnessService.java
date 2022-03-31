@@ -37,7 +37,7 @@ public class BuisnessService {
 		MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
 		
 		String json = bNo.getBNo();
-		String url = "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=qiZ1LHi4vs9UHAPKDnqSXmpbF20WwAPnZd2RpfnCqRhbT06uvUepuDGUgTqdgb6cPGJB2OVnzHbzlH8EJpImng%3D%3D";
+		String url = "api url";
 		String jsonStart = "{\r\n  \"b_no\": [\r\n    \"";
 		String jsonEnd = "\"\r\n  ]\r\n}";
 		
@@ -73,8 +73,8 @@ public class BuisnessService {
 
 	/* 휴대폰 인증 */
 	public String phoneNumberCheck(String pNo) throws CoolsmsException {
-		String api_key = "NCSUABB5JPDXCCE8";
-        String api_secret = "3EWZMGR1KROFDELHRGF2CYGWQ5LZNVYV";
+		String api_key = "api key";
+        String api_secret = "api secret key";
         Message coolsms = new Message(api_key, api_secret);
         
         Random rand = new Random();
@@ -86,7 +86,7 @@ public class BuisnessService {
         
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("to", pNo);
-        params.put("from", "01031338916");
+        params.put("from", "수신자번호"); 
         params.put("type", "sms");
         params.put("text", "인증 번호는 [" + numStr + "] 입니다.");
         params.put("app_version", "doctor app 0.0");
